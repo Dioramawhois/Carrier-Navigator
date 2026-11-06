@@ -35,3 +35,5 @@ beta is local single-player only. Live combat/countermeasure expenditure and
 broader save/load cases are not separately certified; remote/dedicated/native
 macOS operation is unsupported. Full source and developer material are on GitHub;
 the Steam payload contains only eight functional/license files.
+
+[Gameplay video](https://www.youtube.com/watch?v=HidFBf5PSQg).
