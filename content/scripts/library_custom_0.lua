@@ -3,6 +3,8 @@
 -- Handles both library-before-screen and begin_load-time execution without
 -- replacing a screen or competing for a merged SDK screen descriptor.
 do
+    if g_carrier_navigator_library then return end
+    g_carrier_navigator_library=true
     local installed=false
     local function install()
         if installed or type(update)~='function' or type(g_drag)~='table' or
