@@ -1,0 +1,15 @@
+build/
+dist/
+.deps/
+.cache/
+__pycache__/
+*.py[cod]
+*.dll
+*.exe
+*.pdb
+*.obj
+*.o
+*.log
+.DS_Store
+.idea/
+.vscode/
