@@ -13,8 +13,7 @@ The SDK and this addon are separate downloads.
    Wait for Steam to finish downloading both.
 2. Close the game. Download the ready Windows GUI from
    [CC2 ModLoader releases](https://github.com/Dioramawhois/CC2-ModLoader/releases).
-   Choose a release explicitly supporting **SDK 0.10.0-dev**. Older releases do
-   not recognize this DLL.
+   Use **beta 12 or later** for independent official SDK updates.
 3. Place **CC2ModLoader.exe** beside **carrier_command.exe** and open it. Select
    the verified game if asked.
 4. Select the SDK library and Carrier: Autopilot Waypoints together with your
@@ -62,11 +61,10 @@ game folder.** After an SDK runtime update, close the game and repeat the manual
 copy with the new matching DLL. Updating only the Lua addon does not always
 require a new DLL; check the SDK requirement for that addon version.
 
-**We recommend CC2 ModLoader for installation and future DLL updates.** Update
-ModLoader to a release supporting the new SDK, wait for Steam downloads, then
-open ModLoader and let the selected set apply before launching. Its reviewed
-upgrade includes a backup. It does not automatically trust unreviewed future
-SDK binaries. Keep the game closed during runtime installation or replacement.
+**We recommend CC2 ModLoader beta 12 or later for installation and DLL updates.**
+Official compatible SDK updates apply from the downloaded library without replacing
+the ModLoader EXE. Wait for Steam downloads, close the game and let ModLoader apply
+the selected set. Publisher verification, runtime backup and Undo remain active.
 
 ## GitHub player ZIP
 
