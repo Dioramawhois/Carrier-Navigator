@@ -1,11 +1,14 @@
 # Changelog
 
-## Unreleased
+## 0.1.0-alpha.2 - unpublished
 
-- Implement the isolated route and speed controller with native-path gating,
-  manual takeover, session invalidation and validated paused checkpoints.
-- Implement defensive arming decisions for radar or visual contacts, including
-  anti-air, CIWS, torpedo defence and countermeasures. Consumable deployment is
-  pending native integration.
-- Add real-Lua regression fixtures and a source-hashed offline test report.
-- Game controls, the holomap UI and per-save storage are not connected yet.
+- Move route management to the aviation-control map: drag carrier/points, keep
+  later points and repeat links, preserve aircraft and short carrier taps.
+- Replace fixed knot targets with 10-100% native power, default 100%. FULL
+  permits the game's full native output, including Revolution physics.
+- Preserve Revolution permissions and files; draw owned routes when its standard
+  carrier-waypoint display is hidden.
+- Connect native steering, saved routes, manual takeover, expiring leases and
+  team-contact defensive arming through the optional CC2X motion interface.
+- Add source-hashed real-Lua runtime/UI fixtures and negative controls.
+- Local single-player candidate; revised UI and live combat need acceptance.

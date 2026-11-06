@@ -1,58 +1,55 @@
 # Carrier Navigator
 
-Standalone Carrier Command 2 mod in development: carrier waypoints, selectable
-cruising speed and threat-triggered defensive weapon activation.
+Separate Carrier Command 2 addon: native carrier waypoints, selectable engine
+power and threat-triggered defensive arming. Current candidate: **0.1.0-alpha.2**,
+requiring the matching experimental **CC2X 0.10.0-dev** runtime.
 
-This project is independent of Island Airfields. The first route and defence
-policies are implemented and tested with real Lua and synthetic telemetry.
-The game adapter and interface are not connected yet; there is no installable
-or gameplay-tested build.
+## Controls
 
-Confirmed requirements:
+Use the **aviation-control map**. Drag your carrier to create a route; drag an
+existing point to reposition it while keeping the following points. A short
+carrier click keeps the normal carrier interaction. Open **NAV** in the upper
+right for **+ POINT**, **CLEAR**, **START / PAUSE**, power and defence controls.
+Aircraft orders, cameras and loadout windows continue through the original screen.
 
-- Follow an ordered route of carrier waypoints.
-- Let the player select the desired cruising speed.
-- Activate defensive weapons when a threat is detected by radar **or visual
-  contact**. Either source is sufficient. Hidden world entities do not count.
-- Include anti-air weapons, CIWS, torpedo defence and countermeasures.
+**FULL / 100%** permits the game's full native forward power. There is no fixed
+25-knot or real-world maximum. Engine, hull, waves, turns and enabled mods
+determine actual speed, displayed in knots. Lower percentages limit forward jet
+output; they are power settings, not promised cruising speeds.
 
-## Implementation status
+Navigation uses the engine's existing sea path follower. Routes and navigation
+mode use native game saves; a saved active route is adopted on loading. Power is
+a user preference. Moving the physical helm/throttle cancels autopilot; use Start
+explicitly to resume. Pausing neutralizes propulsion, with normal ship inertia.
 
-| Area | Current implementation | Remaining integration |
-| --- | --- | --- |
-| Route | Sequential points, native-path requirement, pause and manual takeover | Authoritative route/path reads and native mode transition |
-| Speed | Knots, gradual throttle regulation, turn/endpoint slowdown | Guarded native control output and measured carrier tuning |
-| Defence | Current team contact filtering, separate air/missile/torpedo decisions, manual locks and pending-action retries | Team sensor API, exact weapon mapping and consumable deployment |
-| Save/load | Versioned checkpoint validation, restore paused | Per-save engine storage; no global route file |
-| UI | Holomap selected as the intended surface | Map controls, speed selection and defence settings |
+Defence starts disabled each session. Current team radar **or** visual detection
+can arm AA, CIWS and native torpedo/countermeasure automation. Offensive weapons
+and countermeasure fire pulses remain untouched. Manual off switches are respected
+until automation is explicitly enabled again. Disabling automation does not disarm
+systems already enabled by the game.
 
-The provisional controller gains and detection ranges in the tests are synthetic
-fixtures. They are not measured game parameters. Native waypoint steering is
-preferred where the reviewed engine branch can be used safely. A pure controller
-test is not evidence of collision avoidance, stopping distance or multiplayer.
+## Revolution and validation
 
-## Developer validation
+This package appends owned helper code to the installed aviation screen through
+CC2X. It includes no Revolution files, complete game screens or gameplay DLL.
+Revolution's command permissions remain in force; its hidden-carrier-route option
+is preserved while Navigator draws its own route. Use the original Revolution
+subscription alongside this independent addon.
 
-Use an external CC2X checkout with `dist/dinput8.build.json`, its restored Lua
-sources and its verified Zig 0.15.2 compiler:
+The initial native route ran in a private legitimate game copy with the owner's
+copied Revolution-containing mod set. The revised aviation-map UI requires its own
+runtime acceptance. Offline fixtures and load logs are not gameplay acceptance.
+Local single-player only: the backend refuses remote multiplayer sessions.
+Live combat and countermeasure expenditure remain unverified. This is unpublished.
+
+## Developer checks
 
 ```powershell
-python tools/test.py --sdk ../cc2x-equipment --zig ../cc2x/.deps/zig-x86_64-windows-0.15.2/zig.exe
+python tools/test.py --sdk ../cc2x-navigation --zig ../cc2x/.deps/zig-x86_64-windows-0.15.2/zig.exe
+python tools/package.py --sdk ../cc2x-navigation --output build/candidates/NEW
 ```
 
-This compiles an owned runner from SDK-hash-verified Lua sources, executes only
-this project's policy fixtures and writes `build/TEST_RESULTS.json` with input,
-compiler and interpreter hashes. No game process or DLL is loaded. Build outputs
-are ignored by Git. Player installation instructions will accompany a playable
-candidate; these commands are for development only.
-
-The intended primary interface is the holomap. Display speed in knots, matching
-the stock propulsion monitor. Native waypoint storage, save/load behaviour,
-steering, manual takeover and authoritative contact access must be verified
-before connecting automation to the game.
-
-See [the requirements](docs/CARRIER_WAYPOINTS_IDEA.ru.md) and
-[the engine audit](docs/ENGINE_AUDIT.ru.md) for current evidence and gaps.
-The [adapter contract](docs/ENGINE_ADAPTER.md) records the remaining engine boundary.
-No game files, third-party screens, native binaries or private research are
-included in this project.
+The runner verifies external Lua/compiler hashes and executes owned fixtures only.
+Packaging freezes a Lua-only addon and a separate matching tested SDK; it never
+installs or publishes. See [engine boundary](docs/ENGINE_ADAPTER.md) and
+[player controls](PLAYER_README.md).

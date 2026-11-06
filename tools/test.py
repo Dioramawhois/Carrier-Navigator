@@ -26,6 +26,9 @@ def main():
     output = build / 'TEST_RESULTS.json'
     output.unlink(missing_ok=True)
     evidence = json.loads((sdk / 'dist/dinput8.build.json').read_text())
+    sdk_tests = json.loads((sdk / 'build/unified/test-results.json').read_text())
+    if sdk_tests['status'] != 'passed' or sdk_tests['artifact_sha256'] != evidence['artifact_sha256']:
+        raise ValueError('Matching passing SDK tests are required')
     if sha(zig) != evidence['compiler_sha256']:
         raise ValueError('Compiler differs from the external SDK build')
     lua = sdk / 'third_party/lua'
@@ -50,8 +53,17 @@ def main():
                     '-I', str(lua), str(ROOT / 'tests/lua_runner.c'),
                     *map(str, sources), '-o', str(runner)], check=True, env=env)
     scenarios = 0
-    for name in ('navigation', 'defence'):
-        policy = ROOT / 'content/bridge' / (name + '.lua')
+    runtime_source = ''
+    for name in ('Cruise', 'Defence', 'Runtime'):
+        source = (ROOT / 'content/bridge' / (name.lower()+'.lua')).read_text(encoding='utf-8')
+        runtime_source += f'local {name} = (function()\n{source}\nend)()\n'
+    runtime_policy = build / 'runtime-test.lua'
+    runtime_policy.write_text(runtime_source+'return {new=function(cc2) return Runtime.new(cc2,Cruise,Defence) end}\n', encoding='utf-8')
+    ui_policy = build / 'ui-test.lua'
+    ui_policy.write_text((ROOT / 'tests/ui_setup.lua').read_text(encoding='utf-8')+'\n'+
+                         (ROOT / 'content/cc2x/ui/navigator.lua').read_text(encoding='utf-8'), encoding='utf-8')
+    for name in ('defence', 'cruise', 'runtime', 'ui'):
+        policy = runtime_policy if name=='runtime' else ui_policy if name=='ui' else ROOT / 'content/bridge' / (name + '.lua')
         fixture = ROOT / 'tests' / (name + '.lua')
         if not policy.is_file() or not fixture.is_file():
             raise ValueError('Missing policy/fixture: ' + name)
@@ -67,14 +79,14 @@ def main():
         scenarios += int(marker[0].split()[1])
     negative_controls = []
     mutations = [
-        ('navigation', "if f.manual then return release('manual_control', false) end",
-         "if false then return release('manual_control', false) end", 'manual_takeover_removed'),
-        ('defence', '(c.radar == true or c.visual == true)',
-         '(c.radar == true and c.visual == true)', 'radar_visual_or_replaced_with_and'),
+        ('runtime', 'if motion.manual or s.was_active',
+         'if false or s.was_active', 'manual_takeover_removed'),
+        ('defence', '(c.detected == true or c.radar == true or c.visual == true)',
+         '(c.detected == true or c.radar == true and c.visual == true)', 'radar_visual_or_replaced_with_and'),
     ]
     with tempfile.TemporaryDirectory(prefix='negative-controls-', dir=build) as temporary:
         for name, before, after, label in mutations:
-            original = (ROOT / 'content/bridge' / (name + '.lua')).read_text(encoding='utf-8')
+            original = (runtime_policy if name == 'runtime' else ROOT / 'content/bridge' / (name + '.lua')).read_text(encoding='utf-8')
             if original.count(before) != 1:
                 raise ValueError('Negative control anchor changed: ' + label)
             mutant = Path(temporary) / (name + '.lua')
@@ -94,9 +106,9 @@ def main():
               'sdk_artifact_sha256': evidence['artifact_sha256'],
               'negative_controls_rejected': negative_controls,
               'game_runtime_tested': False, 'remote_multiplayer_tested': False,
-              'native_controls_connected': False, 'save_hook_connected': False}
+              'runtime_adapter_tested': True, 'native_saved_route': True}
     output.write_text(json.dumps(report, indent=2) + '\n', encoding='utf-8')
-    print(f'{scenarios} scenarios passed; game integration is not yet connected')
+    print(f'{scenarios} scenarios passed; real game acceptance is separate')
 
 
 if __name__ == '__main__':

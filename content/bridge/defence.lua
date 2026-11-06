@@ -8,6 +8,7 @@ local groups = {'anti_air', 'ciws', 'torpedo_defence', 'countermeasures'}
 function M.new(options)
     options = options or {}
     local ranges = {aircraft = options.aircraft_range_m,
+        surface = options.surface_range_m or options.aircraft_range_m,
         missile = options.missile_range_m, torpedo = options.torpedo_range_m}
     for _, kind in ipairs({'aircraft', 'missile', 'torpedo'}) do
         assert(finite(ranges[kind]) and ranges[kind] > 0, 'reviewed range required: ' .. kind)
@@ -33,12 +34,14 @@ function M.new(options)
         local wanted = {}
         for _, c in ipairs(f.contacts) do
             if type(c) == 'table' and id(c.id, 1) and c.hostile == true and c.current == true and
-                (c.radar == true or c.visual == true) and finite(c.range_m) and c.range_m >= 0 and
+                (c.detected == true or c.radar == true or c.visual == true) and finite(c.range_m) and c.range_m >= 0 and
                 ranges[c.kind] and c.range_m <= ranges[c.kind] then
-                if c.kind == 'aircraft' or c.inbound == true then
+                if c.kind == 'aircraft' or c.kind == 'surface' or c.inbound == true then
                     result.threats = result.threats+1
                     if c.kind == 'torpedo' then
                         wanted.torpedo_defence, wanted.countermeasures = true, true
+                    elseif c.kind == 'surface' then
+                        wanted.ciws, wanted.torpedo_defence, wanted.countermeasures = true, true, true
                     else wanted.anti_air, wanted.ciws = true, true end
                 end
             end
