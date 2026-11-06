@@ -1,14 +1,19 @@
 # Carrier: Autopilot Waypoints
 
+[Steam Workshop](https://steamcommunity.com/sharedfiles/filedetails/?id=3834928522)
+| [Client beta release](https://github.com/Dioramawhois/Carrier-Navigator/releases/tag/v0.1.0-client-beta.1)
+| [Gameplay video](https://www.youtube.com/watch?v=HidFBf5PSQg)
+
 Give your carrier a route, set its engine power and return to commanding aircraft.
 Carrier: Autopilot Waypoints adds carrier navigation to the **same aviation-control map**
 used for aircraft orders, with optional threat-triggered defensive arming.
 
-**0.1.0-client-beta.1**, awaiting owner artwork, targets Windows CC2
+**0.1.0-client-beta.1**, published on 2026-11-07, targets Windows CC2
 1.5.18-r2, local single-player and
 the matching **CC2X SDK 0.10.0-dev**. Stock and original Revolution can use the
 addon independently of Island Airfields. The owner accepted the alpha.4 combined
-ModLoader test; publication waits for their artwork.
+ModLoader test and authorized beta publication with the steering observation
+documented below. The supplied cover and video are used on the Workshop page.
 
 ## Plot and adjust a route
 

@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.1.0-client-beta.1 - awaiting owner artwork
+## 0.1.0-client-beta.1 - published 2026-11-07
 
 - Preserve owner-accepted alpha.4 navigation and the exact motion-enabled SDK
   from the ordinary combined ModLoader test. Record general acceptance separately
@@ -9,7 +9,10 @@
   a manually copied DLL must be replaced after an SDK runtime update.
 - Recommend compatible CC2 ModLoader for reviewed DLL installation and upgrades.
 - Freeze an eight-file Steam payload. Keep complete owned source, tests and
-  packaging tools on GitHub. Await owner pictures before publication.
+  packaging tools on GitHub. Publish with the owner's cover and gameplay video.
+- Record the owner's temporary off-course turn on a two-point route, followed
+  by realignment. Beta publication was explicitly authorized with this observation;
+  no navigation fix is claimed.
 
 - Fix the public mod name as **Carrier: Autopilot Waypoints** in metadata,
   player documentation and Workshop materials. Use Autopilot Waypoints on the

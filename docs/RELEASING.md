@@ -1,5 +1,12 @@
 # Release procedure
 
+Published on 2026-11-07: Workshop item 3834928522 and GitHub client beta 1.
+SDK 0.10.0-dev and compatible CC2 ModLoader beta 11 were released separately.
+All eight mod files and twelve SDK Workshop files were redownloaded and matched
+against the staged payload hashes. GitHub release assets and the permanent
+ModLoader beta channel were downloaded and verified too. See the publication
+receipt in docs/verification/PUBLICATION_2026-11-07.json.
+
 Official public title: **Carrier: Autopilot Waypoints**. Windows player packages
 use **Carrier Autopilot Waypoints** without the colon. Existing repository URLs,
 module/settings IDs and historical candidate folders remain stable.

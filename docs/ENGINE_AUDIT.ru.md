@@ -1,5 +1,12 @@
 # Carrier: Autopilot Waypoints: состояние интеграции
 
+Release status 2026-11-07: client beta 1 is published as Carrier: Autopilot
+Waypoints (Workshop 3834928522). The owner accepted the ordinary combined
+ModLoader test and authorized beta publication after observing temporary
+off-course steering followed by realignment. The cause is unresolved.
+The alpha.2/alpha.3 notes below are historical; publication hashes and limits
+are in verification/PUBLICATION_2026-11-07.json.
+
 Перед релизом добавлена alpha.3: штатная анимация штурвала и рычага получает
 текущие команды, тяга плавно подбирается под поворот и восстанавливается при
 выравнивании. Штатное замедление у точки, ограничения двигателя и ручной перехват

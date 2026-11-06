@@ -1,0 +1,118 @@
+{
+  "schema": 1,
+  "date": "2026-11-07",
+  "status": "published-client-beta",
+  "mod_title": "Carrier: Autopilot Waypoints",
+  "mod_version": "0.1.0-client-beta.1",
+  "release_source_commit": "991dc99c7c3648d57fe6d539c293ce2a1051c9e3",
+  "sdk_version": "0.10.0-dev",
+  "sdk_source_commit": "4c9520608ec613280c95c8054227fdc0ecccaad4",
+  "runtime_sha256": "2e799fd21ee3571b7d316cf0f25e7649e55b52a2777b2dc0bb84751018dc7ad5",
+  "modloader_version": "0.4.0b11",
+  "modloader_source_commit": "f1c54b86e5db24ef4e0c02e40da068823a1c32f5",
+  "modloader_exe_sha256": "63b7fffec32980edc5e1313b488f0243793eceb7d2713dd44a6b6228b13823bf",
+  "steam_redownload": [
+    {
+      "workshop_item": "3833014670",
+      "title": "CC2X SDK",
+      "file_count": 12,
+      "every_payload_hash_matches": true,
+      "files": {
+        "LICENSE": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+        "mod.xml": "995781e49e194d50c42e304ad8123e9c4efc64fdb1511951dd1da1e628e22a4d",
+        "NOTICE.md": "ace877713f9240e4b245c448c1748176192fd026f7311dd1d80bdf31c3fd93ac",
+        "README.txt": "f637a5de22c8815f2d610c4983f2b78d1043dc91757dfdb60efd8e80ce44f1af",
+        "content/dinput8.dll": "2e799fd21ee3571b7d316cf0f25e7649e55b52a2777b2dc0bb84751018dc7ad5",
+        "LICENSES/libcxx-LICENSE.txt": "539dd7aed86e8a4f12cbdd0e6c50c189c7d74847e4fecc64ce2c6ee3a01da38b",
+        "LICENSES/libcxxabi-LICENSE.txt": "e2b35be49f7284a45b7baca8fc7b3ab7440e7902392b2528a457816b5bb2a15c",
+        "LICENSES/libunwind-LICENSE.txt": "b5efebcaca80879234098e52d1725e6d9eb8fb96a19fce625d39184b705f7b6d",
+        "LICENSES/Lua-LICENSE.txt": "2c900706552b19a2b9c4e670f0b4abadb5b5f31b93725e8274e3651a101365a5",
+        "LICENSES/mingw-COPYING.txt": "99a69660981156c21336fdb5661f89341b013c94e4bf9e1c7467b4745718397f",
+        "LICENSES/NativeBridge-NOTICE.original.md": "59479e8410eac6ffbdeb17efac05b5f19cacfa0ec8f23da3a8c654e84d2dabc5",
+        "LICENSES/Zig-LICENSE.txt": "5c537d6853e005298a285d508cff9ac7192cea23576c840d485b2b586a7ff177"
+      }
+    },
+    {
+      "workshop_item": "3834928522",
+      "title": "Carrier: Autopilot Waypoints",
+      "file_count": 8,
+      "every_payload_hash_matches": true,
+      "files": {
+        "LICENSE": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+        "mod.xml": "8e43cd5ae13ed2a59a5531c1e584b1246384510de253155e9cccb9840faa516f",
+        "content/bridge.json": "756085a0c9c18618e888ab259baac3f68fdb019c70a69728adfc546ad58b480b",
+        "content/bridge/cruise.lua": "d77e6db9b48ad4744ec513772bd0d4ea7c8b89835add6d0bf2a2beac69cc098d",
+        "content/bridge/defence.lua": "6e678599938589c19cebde103fe55e028599f0d2d0e825a8131a6581804e9b9e",
+        "content/bridge/main.lua": "ab8d417ec8f9b5ff2b069b6e56b40f4e01d26e78e42cc0fe22a6c6b273f54317",
+        "content/bridge/runtime.lua": "39fb8a67445d0d5ae68bc089ca46d8954cedfd4f679ce8b8ad43ab82c2a27bd6",
+        "content/scripts/library_custom_0.lua": "9c040bd859acec785ee0167016fd020d86b8d984f7823d1511fbcc26034ec356"
+      }
+    }
+  ],
+  "github_redownload": [
+    {
+      "repo": "Dioramawhois/Carrier-Command-2-extender",
+      "release": "https://github.com/Dioramawhois/Carrier-Command-2-extender/releases/tag/0.10.0-dev",
+      "downloaded_assets": 9,
+      "all_hashes_match": true,
+      "sha256": {
+        "CC2X-README.txt": "f637a5de22c8815f2d610c4983f2b78d1043dc91757dfdb60efd8e80ce44f1af",
+        "CC2X-SDK-0.10.0-dev-source.zip": "f9e39d037cf22999ce802b0e12bc79ac4bf096437ebeac34c9670353cf0b18d2",
+        "CC2X-SDK-0.10.0-dev-toolchain-sources.zip": "1dd28806e97a809c8cce6e235046f98af8767ffe80180636bff6b86cf22e1d7c",
+        "CC2X-SDK-0.10.0-dev-windows-x86.zip": "457bbc7fd1756f66a1370503ad8d8324b6d0e9a435fb9e029ff975e65ae081b8",
+        "dinput8.build.json": "4c2f94c0fe9bf55a62dab2b84ea32ce90fe9510bbdbd1ea4534e140a34dfdf13",
+        "dinput8.dll": "2e799fd21ee3571b7d316cf0f25e7649e55b52a2777b2dc0bb84751018dc7ad5",
+        "RELEASE.json": "b508c4493ce956853d74de9cb930a62671a597bb782ccb785b03bade07af4f3d",
+        "SDK-OFFLINE-TESTS.json": "4e90f03a0408ed58069acb5f0b8df72b773d6c6255d31a91c1945cbab4aaee42",
+        "SHA256SUMS.txt": "8aa79e0ef56d7b1c650adfe9d0faea867ca042228c0440f9f9bdbe88ca5b7a64"
+      }
+    },
+    {
+      "release": "https://github.com/Dioramawhois/CC2-ModLoader/releases/tag/latest-beta",
+      "downloaded_assets": 11,
+      "all_hashes_match": true,
+      "source_commit": "f1c54b86e5db24ef4e0c02e40da068823a1c32f5",
+      "sha256": {
+        "CC2ModLoader-0.4.0b1-build-tools.zip": "48397514e7bf0b1bc0483e617def9b22bdc527844de367a662cad853480df9ef",
+        "CC2ModLoader-0.4.0b11-sdk-runtime.zip": "5870e798a7acf44a01be6a45ca2ee9bad3e809c149610f7fe7d19d2f478e68e5",
+        "CC2ModLoader-0.4.0b11-sdk-source.zip": "1334615ad986b20cb6a8abfd0d0ba262da004f57799b588b9e194ce36062e55c",
+        "CC2ModLoader-0.4.0b11-sdk-toolchain-sources.zip": "1dd28806e97a809c8cce6e235046f98af8767ffe80180636bff6b86cf22e1d7c",
+        "CC2ModLoader-0.4.0b11-source.zip": "0a058ca2b9ba6c2bbfd12bf83b788fcdc0188e139019c6a61e7b7705bcee0965",
+        "CC2ModLoader-0.4.0b11-tool-sources.zip": "812e49a4ffc06276da9219a396ce2decd25beefc49a0a945cd0807c5a8ecd0de",
+        "CC2ModLoader-0.4.0b11-windows-x64.zip": "7870fb9455929694fe00b521b26a5c4dabc50b18cdc4568d3032deab64c84365",
+        "CC2ModLoader.exe": "63b7fffec32980edc5e1313b488f0243793eceb7d2713dd44a6b6228b13823bf",
+        "CC2ModLoader.exe.sha256": "18912c2ce637219560c6160a67134ce12005bcee77bd3dc107e0aa576806f758",
+        "CHANNEL.json": "26a9199ff459212c6c2a3ce3924d87e0954d47f9a34087405ffeb5a7d024f296",
+        "SHA256SUMS.txt": "2ff9bb79012d845bdaf82d62348a0be055475d572ef8081cb32d431cec2f638c"
+      }
+    },
+    {
+      "release": "https://github.com/Dioramawhois/Carrier-Navigator/releases/tag/v0.1.0-client-beta.1",
+      "downloaded_assets": 5,
+      "all_hashes_match": true,
+      "sha256": {
+        "Carrier-Autopilot-Waypoints-0.1.0-client-beta.1-source.zip": "e635ddab0ed2543a0b35b425baeeb0b921e139737e54c5a3ff37a91ffa272458",
+        "Carrier-Autopilot-Waypoints-0.1.0-client-beta.1.zip": "49604f2600e2d20649d3cde5b9d8eb8982fa646418cb2cbc0c309e46519cd933",
+        "PLAYER_README.md": "50a55b8d2caad3302988c052ab1ef76fc7000259909171e2ac44cad05a8c6c96",
+        "RELEASE.json": "1db774f237443b2446f19fb740acb0903265f13fb4ed2e331991a8286d00a601",
+        "SHA256SUMS.txt": "2f1dc3882c7cde917d9e0b6c1348c6e917b7055a643101b9abb727fe61dc4d35"
+      }
+    }
+  ],
+  "promo_video": "https://www.youtube.com/watch?v=HidFBf5PSQg",
+  "cover_source_sha256": "c346ee8771bbdea52f22780ac12817ca95d3e9a24f60c554638b1cf47b4c3ecf",
+  "steam_preview_matches_prepared_owner_cover": true,
+  "public_description_verified": true,
+  "beta_observation": "Owner reported temporary off-course steering with two route points, then realignment. Cause unresolved; owner explicitly chose beta publication. No behavior changes were made for this release.",
+  "validation": {
+    "owned_lua_scenarios": 69,
+    "mod_packaging_tests": 6,
+    "native_sdk_suites": 36,
+    "sdk_python_tests": 41,
+    "modloader_tests_passed": 612,
+    "modloader_environment_skips": 9,
+    "modloader_windows_macos_ci": "Python 3.12 and 3.13 all four jobs passed",
+    "game_testing": "Owner-run ordinary Steam installation with Revolution through ModLoader; no new agent-run gameplay test"
+  },
+  "scope": "Windows 1.5.18-r2 local single-player. No exhaustive combat, countermeasure expenditure, save/load, remote multiplayer, dedicated-server, clean-machine or native macOS certification."
+}
