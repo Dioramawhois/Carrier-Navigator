@@ -111,3 +111,7 @@ The release tool verifies the accepted functional hashes and creates a **eight-f
 Workshop payload**, a player ZIP, a complete committed source ZIP and separate
 evidence. Tests, tools, private test observers and release reports never enter
 the Steam payload. See [release procedure](docs/RELEASING.md).
+
+Beta observation: a two-point route temporarily steered off course, then
+realigned. The cause remains under investigation; the owner chose beta publication
+with this limitation. No navigation behavior was changed for this release.

@@ -37,3 +37,7 @@ macOS operation is unsupported. Full source and developer material are on GitHub
 the Steam payload contains only eight functional/license files.
 
 [Gameplay video](https://www.youtube.com/watch?v=HidFBf5PSQg).
+
+Beta observation: a two-point route temporarily steered off course, then
+realigned. The cause remains under investigation; the owner chose beta publication
+with this limitation. No navigation behavior was changed for this release.
