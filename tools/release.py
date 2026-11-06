@@ -164,6 +164,8 @@ def main():
     branding = {name: {'accepted_sha256': acceptance['functional_sha256'][name],
             'release_sha256': sha(files[name])}
         for name in RUNTIME_FILES if sha(files[name]) != acceptance['functional_sha256'][name]}
+    artwork = ROOT / 'workshop/artwork/cover.png'
+    publication_status = 'prepared' if artwork.is_file() else 'awaiting-owner-images'
     metadata = {'schema': 1, 'release_tag': 'v' + version, 'version': version,
         'source_commit': commit, 'candidate_source_commit': receipt['source_commit'],
         'runtime_sha256': receipt['sdk_sha256'],
@@ -173,7 +175,8 @@ def main():
         'workshop_files': {name: sha(data) for name, data in sorted(files.items())},
         'workshop_file_count': len(files), 'source_file_count': len(source_names),
         'offline_scenarios': tests['scenarios'], 'runtime_acceptance': acceptance,
-        'remote_multiplayer_supported': False, 'publication_status': 'awaiting-owner-images'}
+        'remote_multiplayer_supported': False, 'publication_status': publication_status,
+        'owner_artwork_sha256': sha(artwork.read_bytes()) if artwork.is_file() else None}
     assets = {f'{ASSET_PREFIX}-{version}.zip': player,
         f'{ASSET_PREFIX}-{version}-source.zip': sources,
         'PLAYER_README.md': (ROOT / 'PLAYER_README.md').read_bytes(),
@@ -194,7 +197,7 @@ def main():
     (evidence / 'OFFLINE_TESTS.json').write_bytes(json_bytes(tests))
     (evidence / 'WORKSHOP_MANIFEST.json').write_bytes(json_bytes(metadata))
     print(json.dumps({'output': str(output), 'version': version, 'steam_files': len(files),
-        'source_commit': commit, 'publication': 'waiting-for-owner-images'}))
+        'source_commit': commit, 'publication': publication_status}))
 
 
 if __name__ == '__main__':

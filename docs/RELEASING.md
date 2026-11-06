@@ -14,6 +14,10 @@ acceptance in OWNER_ACCEPTANCE_ALPHA4_2026-11-07.json; retain alpha.2 as histori
 On 2026-11-07 the owner explicitly reconfirmed that publication must wait for
 their pictures.
 
+The owner then supplied the cover, stored at workshop/artwork/cover.png, and the
+promo video https://www.youtube.com/watch?v=HidFBf5PSQg. The artwork condition is
+fulfilled. Use the supplied cover and public video link for publication.
+
 ## Frozen gameplay
 
 Release 0.1.0-client-beta.1 preserves accepted alpha4-loop-01 gameplay after the
