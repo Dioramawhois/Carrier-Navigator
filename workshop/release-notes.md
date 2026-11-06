@@ -1,4 +1,4 @@
-# Carrier Navigator 0.1.0-client-beta.1
+# Carrier: Autopilot Waypoints 0.1.0-client-beta.1
 
 Plan a carrier route from the aviation-control map, set native power and return
 to commanding aircraft. Drag the carrier to create a route, drag individual points

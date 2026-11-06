@@ -1,5 +1,14 @@
 # Changelog
 
+## Unreleased - official name
+
+- Fix the public mod name as **Carrier: Autopilot Waypoints** in metadata,
+  player documentation and Workshop materials. Use Autopilot Waypoints on the
+  compact in-game panel and Carrier Autopilot Waypoints for the Windows player
+  folder. Release archive names use Carrier-Autopilot-Waypoints.
+- Preserve existing repository URLs, module/settings identity and frozen test
+  receipts. This naming update is staged for the next closed-game activation.
+
 ## 0.1.0-alpha.4 - route repeat fix
 
 - Restore native route repetition when a carrier waypoint is dropped onto another

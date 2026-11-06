@@ -1,7 +1,7 @@
-# Carrier Navigator
+# Carrier: Autopilot Waypoints
 
 Give your carrier a route, set its engine power and return to commanding aircraft.
-Carrier Navigator adds carrier navigation to the **same aviation-control map**
+Carrier: Autopilot Waypoints adds carrier navigation to the **same aviation-control map**
 used for aircraft orders, with optional threat-triggered defensive arming.
 
 **0.1.0-alpha.4**, with 0.1.0-client-beta.1 being prepared, targets Windows CC2

@@ -99,7 +99,7 @@ do
         if not open then return end
         local x,y,panel=w-152,31,146
         update_ui_rectangle(x,y,panel,143,background)
-        text(x+5,y+4,'CARRIER NAVIGATOR',panel-10)
+        text(x+5,y+4,'AUTOPILOT WAYPOINTS',panel-10)
         local state=read('state',id,0)
         text(x+5,y+17,not ready and 'UNAVAILABLE' or state==2 and 'FOLLOWING ROUTE' or 'PAUSED / MANUAL',panel-10)
         text(x+5,y+30,string.format('NATIVE POWER: %d%%',read('speed',id,100)),panel-10)

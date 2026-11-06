@@ -1,5 +1,9 @@
 # Release procedure
 
+Official public title: **Carrier: Autopilot Waypoints**. Windows player packages
+use **Carrier Autopilot Waypoints** without the colon. Existing repository URLs,
+module/settings IDs and historical candidate folders remain stable.
+
 The owner confirmed the fresh alpha.2 test and requested release preparation on
 2026-11-06. **Do not publish the mod before the owner supplies its pictures.**
 This is the owner's current instruction, not an additional approval requirement.

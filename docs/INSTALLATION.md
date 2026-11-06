@@ -1,12 +1,12 @@
 # Installation
 
-Carrier Navigator requires **CC2X SDK 0.10.0-dev**, Windows CC2 1.5.18-r2 and a
+Carrier: Autopilot Waypoints requires **CC2X SDK 0.10.0-dev**, Windows CC2 1.5.18-r2 and a
 local single-player session. The older SDK 0.9/0.8 runtimes do not provide the
 motion interface. The SDK and Navigator are separate packages.
 
 ## Steam Workshop
 
-1. Subscribe to Carrier Navigator and
+1. Subscribe to Carrier: Autopilot Waypoints and
    [CC2X SDK](https://steamcommunity.com/sharedfiles/filedetails/?id=3833014670).
    Wait for Steam to finish downloading. The Navigator Workshop page will be
    published after the owner supplies its artwork.
@@ -16,7 +16,7 @@ motion interface. The SDK and Navigator are separate packages.
 3. In Steam, open Carrier Command 2 > Manage > Browse local files. Put
    **dinput8.dll beside carrier_command.exe**. A Workshop subscription does not
    install or replace this manually installed DLL automatically.
-4. Enable Carrier Navigator and restart the game. For Revolution, also enable
+4. Enable Carrier: Autopilot Waypoints and restart the game. For Revolution, also enable
    [original Revolution](https://steamcommunity.com/sharedfiles/filedetails/?id=3460002110).
    Island Airfields is optional. No Revolution files are bundled.
 5. Open an aviation-control map, drag the carrier to a destination, then choose
@@ -28,7 +28,7 @@ use the manual runtime route above until a matching release is available.
 
 ## GitHub player ZIP
 
-Extract the **Carrier Navigator** folder from the player ZIP into the game's
+Extract the **Carrier Autopilot Waypoints** folder from the player ZIP into the game's
 local mods folder under **%APPDATA%/Carrier Command 2/mods/**, then enable it.
 Install the SDK DLL as described above. The source ZIP is for development, not
 the player installation. No Python, Git, Lua compiler or developer tools are

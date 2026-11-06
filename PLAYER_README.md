@@ -1,4 +1,4 @@
-# Carrier Navigator 0.1.0-alpha.4 - before release
+# Carrier: Autopilot Waypoints 0.1.0-alpha.4 - before release
 
 Windows CC2 1.5.18-r2, local single-player. Requires the matching CC2X SDK
 0.10.0-dev runtime. [Installation](docs/INSTALLATION.md).

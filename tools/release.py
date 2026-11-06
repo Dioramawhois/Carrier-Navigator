@@ -10,6 +10,8 @@ import subprocess
 import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
+PLAYER_FOLDER = 'Carrier Autopilot Waypoints'
+ASSET_PREFIX = 'Carrier-Autopilot-Waypoints'
 RUNTIME_FILES = (
     'content/bridge.json',
     'content/bridge/main.lua',
@@ -135,7 +137,7 @@ def main():
         for name in RUNTIME_FILES:
             if archive.read('Carrier-Navigator-source/' + name) != files[name]:
                 raise ValueError('Committed gameplay source differs from accepted bytes')
-    player = zip_files({'Carrier Navigator/' + name: data for name, data in files.items()})
+    player = zip_files({PLAYER_FOLDER + '/' + name: data for name, data in files.items()})
     metadata = {'schema': 1, 'release_tag': 'v' + version, 'version': version,
         'source_commit': commit, 'candidate_source_commit': receipt['source_commit'],
         'runtime_sha256': receipt['sdk_sha256'], 'functional_payload_matches_accepted_candidate': True,
@@ -143,15 +145,15 @@ def main():
         'workshop_file_count': len(files), 'source_file_count': len(source_names),
         'offline_scenarios': tests['scenarios'], 'runtime_acceptance': acceptance,
         'remote_multiplayer_supported': False, 'publication_status': 'awaiting-owner-images'}
-    assets = {f'Carrier-Navigator-{version}.zip': player,
-        f'Carrier-Navigator-{version}-source.zip': sources,
+    assets = {f'{ASSET_PREFIX}-{version}.zip': player,
+        f'{ASSET_PREFIX}-{version}-source.zip': sources,
         'PLAYER_README.md': (ROOT / 'PLAYER_README.md').read_bytes(),
         'RELEASE.json': json_bytes(metadata)}
     assets['SHA256SUMS.txt'] = ''.join(sha(data) + '  ' + name + '\n'
         for name, data in sorted(assets.items())).encode('ascii')
     output.mkdir(parents=True)
     for name, data in files.items():
-        target = output / 'steam/Carrier Navigator' / name
+        target = output / 'steam' / PLAYER_FOLDER / name
         target.parent.mkdir(parents=True, exist_ok=True)
         target.write_bytes(data)
     for name, data in assets.items():

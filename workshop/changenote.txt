@@ -1,4 +1,4 @@
-Carrier Navigator 0.1.0-client-beta.1
+Carrier: Autopilot Waypoints 0.1.0-client-beta.1
 
 - Carrier waypoints on the aviation-control map: drag the ship or route points.
 - NAV panel: extend/clear route, start/pause, native engine power and defence.
