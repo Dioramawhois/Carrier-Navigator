@@ -1,4 +1,4 @@
-# Carrier Navigator 0.1.0-alpha.3 - before release
+# Carrier Navigator 0.1.0-alpha.4 - before release
 
 Windows CC2 1.5.18-r2, local single-player. Requires the matching CC2X SDK
 0.10.0-dev runtime. [Installation](docs/INSTALLATION.md).
@@ -9,6 +9,8 @@ Windows CC2 1.5.18-r2, local single-player. Requires the matching CC2X SDK
 3. **+ POINT** adds one point at your next map click, up to 20. Use **CANCEL**
    to leave placement mode. Drag existing points to move them without deleting
    the following route. **CLEAR** stops automation and removes the route.
+   Drop a point onto another point on the same carrier route to create a loop.
+   Drop the final point onto the first to repeat the entire route.
 4. **FULL** selects 100% native forward power; **-10% / +10%** adjust it down to
    10%. Actual speed is displayed in knots. These are power settings, not knot
    targets: engine condition, waves, turns and Revolution physics still apply.

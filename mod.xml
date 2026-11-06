@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<data name="Carrier Navigator - test" version="0.1.0-alpha.3" description="Carrier routes on the aviation map, animated native helm controls and continuous power through turns. Requires the updated matching CC2X 0.10 test runtime. Windows single-player; Revolution compatible." author="Diorama" />
+<data name="Carrier Navigator - test" version="0.1.0-alpha.4" description="Carrier routes and waypoint loops on the aviation map, animated helm controls and continuous power through turns. Requires the matching CC2X 0.10 test runtime. Windows single-player; Revolution compatible." author="Diorama" />

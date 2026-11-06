@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.1.0-alpha.4 - route repeat fix
+
+- Restore native route repetition when a carrier waypoint is dropped onto another
+  waypoint of the same carrier, with mouse and controller input.
+- Keep waypoint positions/IDs and the rest of the route intact when linking.
+  Reject stale highlighted targets and preserve Revolution/local-focus gates.
+- Show the closing repeat segment in Navigator's Revolution fallback drawing.
+- Add six real-Lua UI regressions, including the owner's failing gesture.
+
 ## 0.1.0-alpha.3 - owner test pending
 
 - Feed native helm/throttle animation with current steering and forward command.

@@ -24,6 +24,12 @@ taps delegate to the original screen. Carrier point moves preserve the route tai
 and repeat links. Attack/wait/altitude editing for carrier points is outside this
 UI. Native waypoints are the only route store; settings store power preference.
 
+Drop onto another live waypoint of the same carrier now invokes the native
+set_waypoint_repeat(source ID, target ID) before the ordinary move handler.
+It leaves IDs, positions and the route tail unchanged. Stale targets are refused;
+mouse/controller, local focus and Revolution command permissions share the same
+gate. The hidden-carrier-route fallback draws a native repeat's closing segment.
+
 Defence reads native current-visible records for the owning team. It uses the
 combined detected flag without fabricating radar/visual provenance. Metadata is
 read only after visibility admission. Policy trigger radii are 6 km air,

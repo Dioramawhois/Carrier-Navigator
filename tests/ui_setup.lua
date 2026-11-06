@@ -1,13 +1,14 @@
 local function point(x,z)return{x=function()return x end,y=function()return z end}end
-TEST={messages={},route={},base_events=0,base_updates=0,labels={},next_id=10,taps=0,aircraft_drops=0,lines=0,permission=true}
+TEST={messages={},route={},base_events=0,base_updates=0,labels={},next_id=10,taps=0,aircraft_drops=0,lines=0,permission=true,repeat_calls={},dashed={}}
 e_input={pointer_1=1,back=2,action_a=3};e_input_action={press=1,release=0}
 e_game_object_type={chassis_carrier=0,torpedo=101,torpedo_decoy=102,torpedo_noisemaker=103,torpedo_sonar_buoy=104}
 g_selection={is_selection=function()return TEST.selected==true end}
 g_drag={vehicle_id=0,waypoint_id=0,clear=function(self)self.vehicle_id=0;self.waypoint_id=0 end}
+g_highlighted={vehicle_id=0,waypoint_id=0}
 g_drag_distance,g_cursor_pos_x,g_cursor_pos_y=0,0,0
 g_camera_pos_x,g_camera_pos_y,g_camera_size=1000,2000,16000
 function color8(...)return{...}end
-function update_get_is_focus_local()return true end
+function update_get_is_focus_local()return TEST.focus~=false end
 local vehicle={get=function()return true end,get_id=function()return 42 end,get_position_xz=function()return point(0,0)end}
 function vehicle:get_waypoint_count()return #TEST.route end
 function vehicle:get_waypoint(i)
@@ -24,6 +25,7 @@ function vehicle:clear_waypoints_from(id)
     for i,p in ipairs(TEST.route)do if p.id==id then while #TEST.route>=i do table.remove(TEST.route)end;return end end
 end
 function vehicle:set_waypoint_repeat(id,target)
+    TEST.repeat_calls[#TEST.repeat_calls+1]={id=id,target=target}
     for _,p in ipairs(TEST.route)do if p.id==id then for i,t in ipairs(TEST.route)do if t.id==target then p.repeat_index=i-1 end end end end
 end
 TEST.vehicle=vehicle
@@ -33,6 +35,7 @@ function get_is_vehicle_type_waypoint_capable(definition)return definition~=0 en
 function update_ui_rectangle()end
 function update_ui_image()end
 function update_ui_line()TEST.lines=TEST.lines+1 end
+function render_dashed_line(x,y,tx,ty)TEST.dashed[#TEST.dashed+1]={x=x,y=y,tx=tx,ty=ty}end
 function update_ui_text(_,_,message)TEST.labels[#TEST.labels+1]=message end
 function get_screen_from_world(x,z,cx,cz)return x-cx,z-cz end
 function get_world_from_screen(x,y,cx,cz)return x+cx,y+cz end

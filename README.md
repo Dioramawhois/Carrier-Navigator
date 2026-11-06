@@ -4,7 +4,7 @@ Give your carrier a route, set its engine power and return to commanding aircraf
 Carrier Navigator adds carrier navigation to the **same aviation-control map**
 used for aircraft orders, with optional threat-triggered defensive arming.
 
-**0.1.0-alpha.3**, with 0.1.0-client-beta.1 being prepared, targets Windows CC2
+**0.1.0-alpha.4**, with 0.1.0-client-beta.1 being prepared, targets Windows CC2
 1.5.18-r2, local single-player and
 the matching **CC2X SDK 0.10.0-dev**. Stock and original Revolution can use the
 addon independently of Island Airfields. Publication is waiting for owner artwork
@@ -19,6 +19,10 @@ and the owner's check of the new helm/turning changes.
    additional points, up to 20. The button changes to **CANCEL** while placing.
 4. Drag an existing point to reposition it. The following points and repeat
    links are preserved. A short carrier click keeps the original carrier menu.
+   To loop the route, drop a point onto another point of this carrier's route.
+   For example, drop C onto A to repeat A, B, C, A. This creates a native repeat
+   link; it keeps the point positions and the route intact. Revolution's fallback
+   carrier drawing also shows the closing segment.
 5. **PAUSE AUTOPILOT** releases automatic control and neutralizes propulsion.
    **CLEAR** also removes the route. Stopping still uses normal ship inertia.
 

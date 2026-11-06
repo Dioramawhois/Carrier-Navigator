@@ -8,10 +8,13 @@ The subsequent request adds helm animation and continuous power through turns.
 Alpha.2 acceptance does not cover this new alpha.3 gameplay/runtime. Wait for the
 owner's fresh check of alpha.3 as well; retain the older acceptance as historical.
 
+Alpha.4 additionally repairs point-on-point route repetition in the integrated
+ModLoader set. Its new loop gesture/closing segment need the owner's check.
+
 ## Frozen gameplay
 
 Release 0.1.0-client-beta.1 must use a newly accepted candidate after alpha.3's
-helm/turning fixes. Its seven functional files and recorded SDK DLL must match
+helm/turning and alpha.4 loop fixes. Its functional files and recorded SDK DLL must match
 that accepted candidate exactly. Do not rebuild or substitute that runtime to
 clean up provenance labels; preserve the original build record and verify its
 compiled input hashes against the corresponding source snapshot.

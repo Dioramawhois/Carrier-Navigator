@@ -68,6 +68,16 @@ do
                 update_ui_line(last_x,last_y,x,y,g_color_waypoint or accent)
                 if atlas_icons and atlas_icons.map_icon_waypoint then update_ui_image(x-4,y-4,atlas_icons.map_icon_waypoint,g_color_waypoint or accent,0)
                 else update_ui_rectangle(x-2,y-2,5,5,accent)end
+                local repeat_index=type(wp.get_repeat_index)=='function' and wp:get_repeat_index() or -1
+                if repeat_index>=0 and repeat_index<v:get_waypoint_count() and repeat_index~=i then
+                    local target=v:get_waypoint(repeat_index)
+                    if target:get()then
+                        local target_pos=target:get_position_xz()
+                        local tx,ty=get_screen_from_world(target_pos:x(),target_pos:y(),g_camera_pos_x,g_camera_pos_y,g_camera_size,width,height)
+                        if type(render_dashed_line)=='function'then render_dashed_line(x,y,tx,ty,g_color_waypoint or accent)
+                        else update_ui_line(x,y,tx,ty,g_color_waypoint or accent)end
+                    end
+                end
                 last_x,last_y=x,y
             end
         end
@@ -136,6 +146,20 @@ do
         end
         return true
     end
+    local function repeat_point(v,id,target)
+        if id==target or type(v.set_waypoint_repeat)~='function'then return false end
+        local source_found,target_found=false,false
+        for i=0,v:get_waypoint_count()-1 do
+            local wp=v:get_waypoint(i)
+            if wp:get()then
+                source_found=source_found or wp:get_id()==id
+                target_found=target_found or wp:get_id()==target
+            end
+        end
+        if not source_found or not target_found then return false end
+        v:set_waypoint_repeat(id,target)
+        return true
+    end
     function input_event(event,action)
         local v=carrier()
         if map_active() and event==e_input.pointer_1 then
@@ -153,7 +177,11 @@ do
         local release=action==e_input_action.release and (event==e_input.pointer_1 or event==e_input.action_a)
         if release and map_active() and update_get_is_focus_local() and can_route(v) and g_drag and g_drag.vehicle_id==v:get_id() and (g_drag_distance or 0)>3 then
             local x,z=world(g_cursor_pos_x or px,g_cursor_pos_y or py)
-            if g_drag.waypoint_id and g_drag.waypoint_id>0 then move_point(v,g_drag.waypoint_id,x,z)
+            if g_drag.waypoint_id and g_drag.waypoint_id>0 then
+                if g_highlighted and g_highlighted.vehicle_id==v:get_id() and
+                    (g_highlighted.waypoint_id or 0)>0 and g_highlighted.waypoint_id~=g_drag.waypoint_id then
+                    repeat_point(v,g_drag.waypoint_id,g_highlighted.waypoint_id)
+                else move_point(v,g_drag.waypoint_id,x,z)end
             else v:clear_waypoints();v:clear_attack_target();v:add_waypoint(x,z)end
             clear_drag()
         elseif event==e_input.back and action==e_input_action.press and open then open,adding=false,false;return end

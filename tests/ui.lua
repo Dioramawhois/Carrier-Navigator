@@ -44,6 +44,69 @@ test('repeat links survive a moved carrier point',function()
     input_event(e_input.pointer_1,e_input_action.release)
     assert(TEST.route[3].repeat_index==0)
 end)
+
+local function loop_route()
+    TEST.vehicle:clear_waypoints()
+    TEST.vehicle:add_waypoint(1040,2060);TEST.vehicle:add_waypoint(1090,2100);TEST.vehicle:add_waypoint(1130,2060)
+    g_highlighted.vehicle_id,g_highlighted.waypoint_id=0,0
+end
+local function route_positions()
+    local parts={}
+    for _,p in ipairs(TEST.route)do parts[#parts+1]=p.id..':'..p.x..':'..p.z end
+    return table.concat(parts,';')
+end
+local function loop_drop(event,target)
+    g_drag.vehicle_id,g_drag.waypoint_id,g_drag_distance=42,TEST.route[3].id,20
+    g_highlighted.vehicle_id,g_highlighted.waypoint_id=42,target
+    g_cursor_pos_x,g_cursor_pos_y=40,60
+    input_event(event,e_input_action.release)
+    g_highlighted.vehicle_id,g_highlighted.waypoint_id=0,0
+end
+
+test('dropping the final point onto the first creates a native loop without moving points',function()
+    loop_route();local positions=route_positions();local calls=#TEST.repeat_calls
+    local source,target=TEST.route[3].id,TEST.route[1].id
+    loop_drop(e_input.pointer_1,target)
+    assert(route_positions()==positions and TEST.route[3].repeat_index==0)
+    assert(#TEST.repeat_calls==calls+1 and TEST.repeat_calls[#TEST.repeat_calls].id==source and TEST.repeat_calls[#TEST.repeat_calls].target==target)
+end)
+
+test('controller drop can repeat from the final point to a middle point',function()
+    loop_route();local positions=route_positions()
+    loop_drop(e_input.action_a,TEST.route[2].id)
+    assert(route_positions()==positions and TEST.route[3].repeat_index==1)
+end)
+
+test('a stale highlighted repeat target does not rewrite the route',function()
+    loop_route();local positions=route_positions();local calls=#TEST.repeat_calls
+    loop_drop(e_input.pointer_1,999999)
+    assert(route_positions()==positions and #TEST.repeat_calls==calls)
+end)
+
+test('Revolution permission and local focus gate loop commands',function()
+    loop_route();local positions=route_positions();local calls=#TEST.repeat_calls
+    g_revolution_control_units=false;loop_drop(e_input.pointer_1,TEST.route[1].id)
+    g_revolution_control_units=true;TEST.focus=false;loop_drop(e_input.pointer_1,TEST.route[1].id);TEST.focus=true
+    assert(route_positions()==positions and #TEST.repeat_calls==calls)
+end)
+
+test('a waypoint on another vehicle is not linked into the carrier loop',function()
+    loop_route();local calls=#TEST.repeat_calls
+    g_drag.vehicle_id,g_drag.waypoint_id,g_drag_distance=42,TEST.route[3].id,20
+    g_highlighted.vehicle_id,g_highlighted.waypoint_id=99,TEST.route[1].id
+    input_event(e_input.pointer_1,e_input_action.release)
+    assert(#TEST.repeat_calls==calls)
+    g_highlighted.vehicle_id,g_highlighted.waypoint_id=0,0
+end)
+
+test('Revolution fallback route drawing includes the closing repeat segment',function()
+    loop_route();TEST.route[3].repeat_index=0;g_is_carrier_waypoint=false
+    local before=#TEST.dashed;update(256,256,1)
+    assert(#TEST.dashed==before+1)
+    local line=TEST.dashed[#TEST.dashed]
+    assert(line.x==130 and line.y==60 and line.tx==40 and line.ty==60)
+    g_is_carrier_waypoint=nil
+end)
 test('aircraft drag remains delegated to the original screen',function()
     g_drag.vehicle_id,g_drag.waypoint_id,g_drag_distance=99,0,20
     input_event(e_input.pointer_1,e_input_action.release)
