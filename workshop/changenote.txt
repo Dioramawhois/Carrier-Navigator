@@ -1,0 +1,10 @@
+Carrier Navigator 0.1.0-client-beta.1
+
+- Carrier waypoints on the aviation-control map: drag the ship or route points.
+- NAV panel: extend/clear route, start/pause, native engine power and defence.
+- FULL is 100% game-native forward output, with no fixed knot ceiling.
+- Optional radar-or-visual threat-triggered AA/CIWS/torpedo defensive arming.
+- Native saved routes and manual helm/throttle takeover.
+- Original Revolution command permissions and aircraft controls preserved.
+- Requires CC2X SDK 0.10.0-dev. Local single-player client beta.
+- Minimal Steam payload; full owned source, tests and tools on GitHub.

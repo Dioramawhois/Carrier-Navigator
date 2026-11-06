@@ -1,5 +1,22 @@
 # Changelog
 
+## 0.1.0-alpha.3 - owner test pending
+
+- Feed native helm/throttle animation with current steering and forward command.
+- Replace turn-in-place throttle loss with smooth course-dependent forward power,
+  retaining 35% of the selected setting for a reversal away from the endpoint.
+- Recover selected power as the course aligns; retain endpoint slowdown and
+  normal engine, fuel, disabled-state and manual-control gates.
+- Use the revised matching motion-enabled SDK; alpha.2 acceptance remains historical.
+
+## 0.1.0-client-beta.1 - release preparation
+
+- Preserve owner-accepted alpha.2 gameplay bytes and the exact motion-enabled SDK.
+- Add detailed controls, power/defence behavior, installation and Revolution notes.
+- Stage a nine-file Steam payload; keep all source, tests and tools on GitHub.
+- Record owner acceptance separately from offline checks and unverified combat.
+- Await owner artwork before publishing the release.
+
 ## 0.1.0-alpha.2 - unpublished
 
 - Move route management to the aviation-control map: drag carrier/points, keep

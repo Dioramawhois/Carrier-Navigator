@@ -1,0 +1,47 @@
+[h1]Carrier Navigator - Carrier Waypoints on Your Aviation Map[/h1]
+Give your carrier a route, choose its engine power and get back to commanding aircraft. Carrier Navigator puts navigation and optional defensive automation on the [b]same aviation-control map[/b] where you already issue aircraft orders.
+
+[h2]Plot a route without changing stations[/h2]
+Drag your carrier icon to a destination, open [b]NAV[/b] in the upper-right corner and press [b]START AUTOPILOT[/b]. The carrier follows the game's native sea route while you work with your aircraft.
+
+Use [b]+ POINT[/b], then click the map once, to extend the route. Repeat for additional points, up to 20. Drag an existing point to reposition it without deleting the points that follow it. A short click on the carrier keeps the normal carrier interaction. Aircraft orders, cameras and loadout windows continue through the original screen.
+
+Dragging the carrier itself replaces its previous route. [b]PAUSE AUTOPILOT[/b] releases automatic control and neutralizes propulsion; [b]CLEAR[/b] also removes the route. Ship inertia still applies. You can take over with the physical helm or throttle, then resume explicitly with Start.
+
+[h2]Full native power, not an invented speed limit[/h2]
+Choose [b]-10%[/b], [b]+10%[/b] or [b]FULL[/b] in the same panel. The range is 10-100%, default 100%. Actual speed is shown separately in knots.
+
+[b]FULL allows the game's full native forward output.[/b] There is no fixed 25-knot or real-world maximum. The ship's hull, engine condition, waves, turns and mods such as Revolution determine how fast it actually moves. Percentages are power settings, not guaranteed cruising speeds. The mod does not teleport the carrier, overwrite its velocity or change hull thrust/drag to force a number.
+
+[h2]Live helm controls and smoother turns[/h2]
+The physical wheel and throttle lever follow the autopilot's live commands through the game's normal animation. Forward power adjusts smoothly with the course change instead of dropping into turn-in-place idle. As the carrier straightens it returns towards your selected power. Normal endpoint slowdown, engine output and fuel limits still apply.
+
+[h2]Defensive arming when a threat is detected[/h2]
+Enable [b]DEFENCE: ON[/b] to arm relevant defensive systems when your team currently detects a threat by [b]radar OR visual contact[/b]. Depending on the threat, this can enable AA, CIWS and the game's native torpedo/countermeasure automation. Hidden enemies and friendly projectiles do not trigger it.
+
+The game handles engagement and consumable use. Offensive artillery, cruise missiles and offensive torpedo arming remain under normal control; Navigator does not spam countermeasure fire commands. A manually switched-off defensive system stays respected until you explicitly enable defence automation again. Turning automation off does not disarm systems already enabled.
+
+Defence works independently of the route panel and can remain enabled while navigation is paused. It starts disabled in each new session.
+
+[h2]Native saves and Revolution support[/h2]
+Route points and navigation mode use normal game save data. An active saved route is adopted after loading; power is a user preference. There is no one global route shared across your saves.
+
+With [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3460002110]Revolution[/url], enable the original mod alongside Navigator. Revolution's command permissions stay in force. Navigator can draw its own carrier route when Revolution hides ordinary carrier waypoints, without changing that option. No Revolution files, full game screens or private gameplay DLL are bundled. Island Airfields is optional.
+
+[h2]Install the matching SDK[/h2]
+[olist]
+[*]Subscribe to Carrier Navigator and [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3833014670]CC2X SDK[/url]. Wait for both downloads.
+[*]Close the game and install the matching [b]CC2X SDK 0.10.0-dev[/b] runtime: put [b]dinput8.dll beside carrier_command.exe[/b]. Identify and back up an existing loader before replacing it.
+[*]Enable Carrier Navigator and restart. With Revolution, enable the original Revolution too.
+[*]Open the aviation-control map: drag carrier, [b]NAV > START AUTOPILOT[/b].
+[/olist]
+SDK 0.9/0.8 does not provide the required motion interface. Workshop downloads do not update a manually installed DLL automatically. Automatic installation needs a ModLoader release explicitly supporting this exact runtime.
+
+[url=https://github.com/Dioramawhois/Carrier-Navigator/blob/main/docs/INSTALLATION.md]Installation and controls[/url]
+[url=https://github.com/Dioramawhois/Carrier-Command-2-extender/releases/tag/0.10.0-dev]Matching SDK, source and checksums[/url]
+
+[h2]Client beta scope[/h2]
+Windows CC2 1.5.18-r2, [b]local single-player only[/b]. The owner accepted the revised aviation-map navigation with Revolution; the functional files and exact tested SDK are preserved for this release. Live combat, countermeasure expenditure and broader save/load coverage have not been separately accepted. Remote multiplayer, dedicated servers and native macOS runtime are unsupported. Native sea routing is not a guarantee of collision avoidance.
+
+[h2]Open source[/h2]
+The Steam download contains the mod's functional files and required license only. Full owned source, tests, documentation and packaging tools are on [url=https://github.com/Dioramawhois/Carrier-Navigator]GitHub[/url]. Native motion support remains in the separate open-source CC2X SDK.

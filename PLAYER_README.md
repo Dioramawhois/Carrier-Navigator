@@ -1,28 +1,35 @@
-# Carrier Navigator 0.1.0-alpha.2 - local test
+# Carrier Navigator 0.1.0-alpha.3 - before release
 
-Requires the matching CC2X 0.10 test runtime. Local single-player only.
+Windows CC2 1.5.18-r2, local single-player. Requires the matching CC2X SDK
+0.10.0-dev runtime. [Installation](docs/INSTALLATION.md).
 
-1. Open the **aviation-control map**, where you already issue aircraft orders.
-2. Drag the carrier icon to a destination. Drag a route point to move it while
-   keeping later points. A short click keeps normal carrier interaction.
-3. Open **NAV** in the upper right. **+ POINT** adds one point at your next map
-   click (up to 20). **CLEAR** removes the route.
-4. **FULL** selects 100% native power; **-10% / +10%** adjust it. Actual game
-   speed is shown in knots. There is no fixed knot maximum: Revolution's physics,
-   engine condition, waves and turns determine the result.
-5. Press **START AUTOPILOT**. **PAUSE AUTOPILOT** releases control and neutralizes
-   thrust. Moving the physical helm/throttle also cancels autopilot; use Start
-   explicitly to resume. Stopping still uses normal inertia.
-6. **DEFENCE: ON** enables threat-triggered AA, CIWS and native torpedo
-   countermeasure arming. Radar or visual detection is enough. Hidden/friendly
-   targets do not trigger it; offensive weapons remain under manual control.
+1. Open the **aviation-control map**. Drag the carrier icon to a destination;
+   this replaces its previous route. A short click keeps the native carrier menu.
+2. Open **NAV**, upper right, and press **START AUTOPILOT**.
+3. **+ POINT** adds one point at your next map click, up to 20. Use **CANCEL**
+   to leave placement mode. Drag existing points to move them without deleting
+   the following route. **CLEAR** stops automation and removes the route.
+4. **FULL** selects 100% native forward power; **-10% / +10%** adjust it down to
+   10%. Actual speed is displayed in knots. These are power settings, not knot
+   targets: engine condition, waves, turns and Revolution physics still apply.
+5. **PAUSE AUTOPILOT** neutralizes propulsion. Moving the physical helm/throttle
+   also cancels autopilot; Start resumes it explicitly. Ship inertia still applies.
+6. **DEFENCE: ON** enables automatic defensive arming for current radar or visual
+   threats: AA, CIWS and native torpedo/countermeasure automation. Hidden/friendly
+   targets do not trigger it. Offensive weapons remain under normal control.
 
-The game saves native routes and navigation mode. An active saved route is adopted
-after loading; power is a preference. Defence starts disabled in each new session.
-Disabling it does not disarm already enabled systems. Manual off switches are
-respected until automation is enabled again.
+The helm wheel and throttle lever now follow navigation commands. Ahead power
+adjusts smoothly through turns instead of falling to turn-in-place idle, then
+returns towards the selected setting as the ship straightens. Native endpoint
+slowdown, normal engine output and fuel limits still apply. Alpha.3 needs the
+owner's in-game check before release.
 
-Revolution stays separate; its command restrictions and normal aircraft controls
-are preserved. This candidate is unpublished. Revised UI, live combat and
-countermeasure expenditure need runtime acceptance. Native routing does not
-guarantee collision avoidance.
+Native routes/navigation mode are saved by the game. An active saved route is
+adopted after loading; power is a preference. Defence starts disabled in each new
+session. Disabling it does not disarm systems. Manual off switches are respected
+until defence automation is enabled again.
+
+Use original Revolution separately; Navigator preserves its command restrictions
+and aircraft controls. No Island Airfields dependency. Native routing does not
+guarantee collision avoidance. Live combat/countermeasure expenditure and broad
+save/load coverage remain unverified; remote/dedicated sessions are unsupported.

@@ -4,7 +4,8 @@ local function test(name,fn)
 end
 local function fixture()
     local f={generation=1,messages={},published={},calls={},contacts={},settings={}}
-    f.motion={id=42,team=0,can_control=true,manual=false,engine_on=true,active=false,mode=1,waypoints=2,speed_mps=0}
+    f.motion={id=42,team=0,can_control=true,manual=false,engine_on=true,active=false,mode=1,waypoints=2,speed_mps=0,
+        guidance_ready=true,heading_error=0,path_distance=1000,lever=1}
     f.buttons={}
     for i=0,8 do f.buttons[#f.buttons+1]={name='carrier_weapons_active_'..i,on=false,enabled=true} end
     f.buttons[#f.buttons+1]={name='carrier_countermeasure_active',on=false,enabled=true}
@@ -29,6 +30,12 @@ local function fixture()
         f.calls[#f.calls+1]={id=id,active=active,power=power}
         f.motion.active=active;f.motion.mode=active and 0 or 1;return true
     end
+    cc2.carrier.drive_motion=function(id,power,forward)
+        assert(forward>=0 and forward<=power)
+        cc2.carrier.set_motion(id,true,power)
+        f.calls[#f.calls].forward=forward
+        return true
+    end
     local runtime=POLICY.new(cc2)
     function f:send(topic,value,id)self.messages[#self.messages+1]={topic=topic,value=value,subject=id or 42}end
     return runtime,f
@@ -38,7 +45,15 @@ test('no automatic movement before Start',function()
 end)
 test('Start reaches the native motion API with nonzero bounded power',function()
     local r,f=fixture();r:update();f:send('start',1);r:update()
-    assert(#f.calls==1 and f.calls[1].active and f.calls[1].power==1)
+    assert(#f.calls==1 and f.calls[1].active and f.calls[1].power==1 and f.calls[1].forward==1)
+end)
+
+test('course changes reach native forward control without a stop command',function()
+    local r,f=fixture();r:update();f:send('start',1);r:update()
+    f.motion.heading_error=math.pi
+    for _=1,90 do r:update() end
+    assert(f.calls[#f.calls].active and f.calls[#f.calls].forward>=.35)
+    for _,call in ipairs(f.calls)do assert(call.active and call.forward>0)end
 end)
 test('Pause reaches the native release API',function()
     local r,f=fixture();r:update();f:send('start',1);r:update();f:send('pause',0);r:update()

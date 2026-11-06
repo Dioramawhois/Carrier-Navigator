@@ -7,8 +7,12 @@ copied UI state. The backend admits only the owning team in a single-peer local
 session. Errors, unload, empty routes, manual helm/throttle and missed renewals
 release control. A lost lease requires an explicit new Start.
 
-cruise.lua converts 10-100% into the forward-output cap. At 100% there is no
-cruising-speed ceiling. Steering/pathfinding and acceleration remain native;
+cruise.lua converts 10-100% into a forward-output cap and selects a smooth
+forward command through cc2.carrier.drive_motion. Course error progressively
+reduces power to 35% of the setting at a reversal; endpoint distance reduces it
+near the native path target. Lever changes are bounded, resume uses live lever
+state and straightening restores selected power. At 100% there is no knot
+ceiling. Steering/pathfinding and physical acceleration remain native;
 transform, velocity, hull thrust and drag are not overwritten. The former
 synthetic steering/PID controller is removed from the shipped module.
 
@@ -36,5 +40,7 @@ option is not modified; owned fallback drawing makes Navigator points visible.
 Third-party script syntax checks do not execute those scripts outside the game.
 
 Real-Lua synthetic fixtures, native synthetic ABI fixtures and private game runs
-are separate evidence. The initial native route ran with Revolution; alpha.2
-aviation controls and ordinary-install/remote-game behavior are not yet certified.
+are separate evidence. The owner accepted alpha.2 aviation navigation with
+Revolution and requested release preparation. The exact accepted functional files
+and runtime are preserved. Ordinary-install/remote-game and separate live-combat
+acceptance remain outside that confirmation.

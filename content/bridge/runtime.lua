@@ -73,8 +73,8 @@ function M.new(cc2, Cruise, Defence)
                     if fresh and motion.mode == 0 and motion.waypoints > 0 then s.running = true end
                     if motion.manual or s.was_active and not motion.active or motion.waypoints == 0 then s.running = false end
                     if s.running then
-                        local power = s.cruise.step(motion.speed_mps, speed, 1/30)
-                        if not cc2.carrier.set_motion(v.id, true, power) then s.running = false end
+                        local power,forward = s.cruise.step(motion, speed, 1/30)
+                        if not cc2.carrier.drive_motion(v.id, power, forward) then s.running = false end
                     elseif motion.active then cc2.carrier.set_motion(v.id, false, 0) end
                     s.was_active = s.running
                     s.pending, s.threats = {}, 0
