@@ -12,8 +12,8 @@ speed is shown in knots and remains governed by the game's physics and Revolutio
 The physical helm wheel and throttle lever follow navigation commands. Ahead
 power adjusts smoothly through course changes, preserving headway instead of
 dropping to turn-in-place idle, then recovers as the ship aligns. Endpoint,
-engine and fuel gates remain active. The new alpha.3 revision awaits the owner's
-test independently of the earlier alpha.2 acceptance.
+engine and fuel gates remain active. Drop a route point onto another carrier
+route point to create a repeat link; drop the last onto the first for a loop.
 
 Optional defence can arm AA, CIWS and native torpedo/countermeasure systems when
 your team currently detects a threat by radar **or** visual contact. Offensive
@@ -25,8 +25,10 @@ disabled per session. Original Revolution's command permissions and normal
 aircraft interactions remain in place. No Revolution files are bundled.
 
 Requires **CC2X SDK 0.10.0-dev** separately. Install its exact DLL beside the game
-executable while the game is closed; a Workshop download alone does not update
-that file. [Installation](https://github.com/Dioramawhois/Carrier-Navigator/blob/main/docs/INSTALLATION.md).
+executable while the game is closed. We recommend a CC2 ModLoader release
+explicitly supporting this SDK for reviewed installation and future DLL upgrades.
+After a manual SDK runtime update, copy the new DLL again: Steam does not replace
+the game-folder copy. [Installation](https://github.com/Dioramawhois/Carrier-Navigator/blob/main/docs/INSTALLATION.md).
 
 The owner accepted the revised navigation experience with Revolution. This client
 beta is local single-player only. Live combat/countermeasure expenditure and

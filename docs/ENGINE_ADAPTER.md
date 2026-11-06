@@ -49,7 +49,8 @@ option is not modified; owned fallback drawing makes Navigator points visible.
 Third-party script syntax checks do not execute those scripts outside the game.
 
 Real-Lua synthetic fixtures, native synthetic ABI fixtures and private game runs
-are separate evidence. The owner accepted alpha.2 aviation navigation with
-Revolution and requested release preparation. The exact accepted functional files
-and runtime are preserved. Ordinary-install/remote-game and separate live-combat
-acceptance remain outside that confirmation.
+are separate evidence. The owner accepted alpha.4 navigation in the ordinary
+Steam installation through ModLoader with Revolution. Release packaging preserves
+the exact SDK and gameplay, allowing only the three explicit public-title Lua
+string changes and recording their hashes. Remote-game, exhaustive save/load and
+separate live-combat acceptance remain outside that general confirmation.

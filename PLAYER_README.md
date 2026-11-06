@@ -1,4 +1,4 @@
-# Carrier: Autopilot Waypoints 0.1.0-alpha.4 - before release
+# Carrier: Autopilot Waypoints 0.1.0-client-beta.1
 
 Windows CC2 1.5.18-r2, local single-player. Requires the matching CC2X SDK
 0.10.0-dev runtime. [Installation](docs/INSTALLATION.md).
@@ -23,8 +23,8 @@ Windows CC2 1.5.18-r2, local single-player. Requires the matching CC2X SDK
 The helm wheel and throttle lever now follow navigation commands. Ahead power
 adjusts smoothly through turns instead of falling to turn-in-place idle, then
 returns towards the selected setting as the ship straightens. Native endpoint
-slowdown, normal engine output and fuel limits still apply. Alpha.3 needs the
-owner's in-game check before release.
+slowdown, normal engine output and fuel limits still apply. The owner accepted
+the combined ModLoader test after the alpha.4 route-loop fix.
 
 Native routes/navigation mode are saved by the game. An active saved route is
 adopted after loading; power is a preference. Defence starts disabled in each new
@@ -35,3 +35,11 @@ Use original Revolution separately; Navigator preserves its command restrictions
 and aircraft controls. No Island Airfields dependency. Native routing does not
 guarantee collision avoidance. Live combat/countermeasure expenditure and broad
 save/load coverage remain unverified; remote/dedicated sessions are unsupported.
+
+**The SDK DLL is required.** A Workshop subscription alone does not install
+**dinput8.dll beside carrier_command.exe**. Follow the manual DLL instructions
+or use a **CC2 ModLoader release explicitly supporting SDK 0.10.0-dev**.
+We recommend ModLoader for reviewed installation and DLL upgrades with backups.
+After a manually installed SDK DLL is updated, close the game and copy the new
+matching DLL into the game folder again; Steam does not replace that copy.
+See [installation and updates](docs/INSTALLATION.md).

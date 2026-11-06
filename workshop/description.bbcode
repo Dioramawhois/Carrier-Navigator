@@ -21,23 +21,47 @@ The physical wheel and throttle lever follow the autopilot's live commands throu
 [h2]Defensive arming when a threat is detected[/h2]
 Enable [b]DEFENCE: ON[/b] to arm relevant defensive systems when your team currently detects a threat by [b]radar OR visual contact[/b]. Depending on the threat, this can enable AA, CIWS and the game's native torpedo/countermeasure automation. Hidden enemies and friendly projectiles do not trigger it.
 
-The game handles engagement and consumable use. Offensive artillery, cruise missiles and offensive torpedo arming remain under normal control; Navigator does not spam countermeasure fire commands. A manually switched-off defensive system stays respected until you explicitly enable defence automation again. Turning automation off does not disarm systems already enabled.
+The game handles engagement and consumable use. Offensive artillery, cruise missiles and offensive torpedo arming remain under normal control. The mod arms native defensive automation instead of repeatedly issuing countermeasure fire commands. A manually switched-off defensive system stays respected until you explicitly enable defence automation again. Turning automation off does not disarm systems already enabled.
 
 Defence works independently of the route panel and can remain enabled while navigation is paused. It starts disabled in each new session.
 
 [h2]Native saves and Revolution support[/h2]
 Route points and navigation mode use normal game save data. An active saved route is adopted after loading; power is a user preference. There is no one global route shared across your saves.
 
-With [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3460002110]Revolution[/url], enable the original mod alongside Navigator. Revolution's command permissions stay in force. Navigator can draw its own carrier route when Revolution hides ordinary carrier waypoints, without changing that option. No Revolution files, full game screens or private gameplay DLL are bundled. Island Airfields is optional.
+With [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3460002110]Revolution[/url], enable the original mod alongside this addon. Revolution's command permissions stay in force. This addon can draw its carrier route when Revolution hides ordinary carrier waypoints, without changing that option. No Revolution files, full game screens or private gameplay DLL are bundled. Island Airfields is optional.
 
-[h2]Install the matching SDK[/h2]
+[h2]Required DLL: CC2X SDK 0.10.0-dev[/h2]
+[b]This mod requires the matching native dinput8.dll. Subscribing to the Workshop mod alone is not enough.[/b] The DLL supplies the carrier motion and control APIs that the game's ordinary Lua interface does not expose. It belongs to the separate [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3833014670]CC2X SDK[/url]; no DLL is hidden inside this addon. SDK 0.9/0.8 cannot run its navigation.
+
+Use Windows Carrier Command 2 1.5.18-r2. Choose one installation method below.
+
+[h2]Recommended: install with CC2 ModLoader[/h2]
 [olist]
 [*]Subscribe to Carrier: Autopilot Waypoints and [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3833014670]CC2X SDK[/url]. Wait for both downloads.
-[*]Close the game and install the matching [b]CC2X SDK 0.10.0-dev[/b] runtime: put [b]dinput8.dll beside carrier_command.exe[/b]. Identify and back up an existing loader before replacing it.
-[*]Enable Carrier: Autopilot Waypoints and restart. With Revolution, enable the original Revolution too.
-[*]Open the aviation-control map: drag carrier, [b]NAV > START AUTOPILOT[/b].
+[*]Close the game. Download the ready Windows GUI from [url=https://github.com/Dioramawhois/CC2-ModLoader/releases]CC2 ModLoader releases[/url]. Use a release that explicitly supports [b]SDK 0.10.0-dev[/b]; older builds do not recognize this runtime.
+[*]Place [b]CC2ModLoader.exe[/b] beside [b]carrier_command.exe[/b] and open it. Select the verified game if asked.
+[*]Select the SDK library and Carrier: Autopilot Waypoints, together with the other mods you want. Include original Revolution when using it. ModLoader prepares the combined mod and installs the reviewed SDK DLL through its reversible apply process.
+[*]Wait for the selection to finish applying, then click [b]Launch[/b]. No terminal, compiler or technical configuration editing is needed.
 [/olist]
-SDK 0.9/0.8 does not provide the required motion interface. Workshop downloads do not update a manually installed DLL automatically. Automatic installation needs a ModLoader release explicitly supporting this exact runtime.
+
+ModLoader checks the supported game and exact DLL, backs up a recognized previous runtime and preserves an unknown installed loader. If it reports an incompatible loader, resolve that identified conflict before launching this addon.
+
+[h2]Alternative: install the DLL manually[/h2]
+[olist]
+[*]Subscribe to this mod and CC2X SDK and wait for the downloads. Close the game.
+[*]Get [b]dinput8.dll[/b] from the [url=https://github.com/Dioramawhois/Carrier-Command-2-extender/releases/tag/0.10.0-dev]matching SDK 0.10.0-dev release[/url]. Use the DLL asset, or extract it from the Windows runtime ZIP. The full source ZIP is for developers.
+[*]In Steam, right-click Carrier Command 2, choose [b]Manage > Browse local files[/b]. This opens the folder containing [b]carrier_command.exe[/b].
+[*]If that folder already contains dinput8.dll, identify it and back up the existing CC2X loader before replacing it. Preserve an unrelated loader; this mod cannot use two different DLLs under the same filename.
+[*]Copy the matching [b]dinput8.dll directly beside carrier_command.exe[/b]. Putting it only in a mods folder or leaving it inside an archive does not install the runtime.
+[*]Enable Carrier: Autopilot Waypoints in the game's mod list, plus original Revolution if used, and restart the game.
+[/olist]
+
+For either method: open the aviation-control map, drag your carrier to a destination, then choose [b]NAV > START AUTOPILOT[/b].
+
+[h2]Important: reinstall the DLL after SDK updates[/h2]
+[b]Steam updating the Workshop SDK does not replace a DLL that you copied into the game folder manually.[/b] After an SDK runtime update, close the game and repeat the manual copy using the new matching DLL. Updating only this Lua addon does not always require a new DLL; follow its stated SDK requirement.
+
+[b]We recommend CC2 ModLoader for installation and future DLL updates.[/b] Update ModLoader to a release supporting the new SDK, let Steam finish its downloads, then open ModLoader and let the selected set apply before launching. It upgrades reviewed runtimes with a backup; it does not silently trust every future DLL. Always close the game before replacing an installed runtime.
 
 [url=https://github.com/Dioramawhois/Carrier-Navigator/blob/main/docs/INSTALLATION.md]Installation and controls[/url]
 [url=https://github.com/Dioramawhois/Carrier-Command-2-extender/releases/tag/0.10.0-dev]Matching SDK, source and checksums[/url]

@@ -8,18 +8,20 @@ The owner confirmed the fresh alpha.2 test and requested release preparation on
 2026-11-06. **Do not publish the mod before the owner supplies its pictures.**
 This is the owner's current instruction, not an additional approval requirement.
 
-The subsequent request adds helm animation and continuous power through turns.
-Alpha.2 acceptance does not cover this new alpha.3 gameplay/runtime. Wait for the
-owner's fresh check of alpha.3 as well; retain the older acceptance as historical.
-
-Alpha.4 additionally repairs point-on-point route repetition in the integrated
-ModLoader set. Its new loop gesture/closing segment need the owner's check.
+The owner subsequently tested alpha.4 in the ordinary Steam installation through
+ModLoader with Revolution and requested publication. Record that general owner
+acceptance in OWNER_ACCEPTANCE_ALPHA4_2026-11-07.json; retain alpha.2 as historical.
+On 2026-11-07 the owner explicitly reconfirmed that publication must wait for
+their pictures.
 
 ## Frozen gameplay
 
-Release 0.1.0-client-beta.1 must use a newly accepted candidate after alpha.3's
-helm/turning and alpha.4 loop fixes. Its functional files and recorded SDK DLL must match
-that accepted candidate exactly. Do not rebuild or substitute that runtime to
+Release 0.1.0-client-beta.1 preserves accepted alpha4-loop-01 gameplay after the
+helm/turning and loop fixes. The public title changes exactly three Lua string
+literals; tools/release.py permits only those explicit substitutions, verifies
+the original candidate hashes and records both old and new hashes. It does not
+claim byte-identical functional files after this presentation update. The SDK
+DLL must match the accepted candidate exactly. Do not rebuild that runtime to
 clean up provenance labels; preserve the original build record and verify its
 compiled input hashes against the corresponding source snapshot.
 
@@ -29,7 +31,7 @@ Preserve those limits and the single-player scope in public copy.
 
 ## Package surfaces
 
-- Steam: mod.xml, LICENSE and the seven runtime files only. No tests, tools,
+- Steam: mod.xml, LICENSE and the six runtime files only (eight files). No tests, tools,
   READMEs, evidence, ZIPs, SDK binaries, private observer or autoload driver.
 - GitHub: all owned source, tests, tools, design notes, release copy and license.
   Also publish the SDK navigation source in its own repository/branch. Build

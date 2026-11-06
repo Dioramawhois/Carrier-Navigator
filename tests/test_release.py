@@ -64,6 +64,27 @@ class ReleaseTests(unittest.TestCase):
                 with self.assertRaises(ValueError):
                     release.validate_payload(root, candidate, receipt, acceptance)
 
+    def test_only_the_three_exact_title_literals_can_differ(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root, candidate, receipt, acceptance = self.fixture(directory)
+            for name, changes in release.BRANDING_REPLACEMENTS.items():
+                original = b'\n'.join(before for before, _ in changes)
+                (candidate / 'Carrier Navigator' / name).write_bytes(original)
+                (root / name).write_bytes(release.branded_candidate(name, original))
+                receipt['files']['Carrier Navigator/' + name] = release.sha(original)
+                acceptance['functional_sha256'][name] = release.sha(original)
+            release.validate_payload(root, candidate, receipt, acceptance)
+            path = root / 'content/bridge/main.lua'
+            path.write_bytes(path.read_bytes() + b'\ncc2.carrier.drive_motion(1,1,1)')
+            with self.assertRaises(ValueError):
+                release.validate_payload(root, candidate, receipt, acceptance)
+
+    def test_title_replacement_requires_one_exact_old_literal(self):
+        name = 'content/scripts/library_custom_0.lua'
+        for original in (b'unknown', b"'CARRIER NAVIGATOR' 'CARRIER NAVIGATOR'"):
+            with self.subTest(original=original), self.assertRaises(ValueError):
+                release.branded_candidate(name, original)
+
     def test_source_archive_rejects_secrets_native_files_and_traversal(self):
         required = {'tools/release.py', 'tests/runtime.lua', 'tests/ui.lua', 'README.md', 'LICENSE', *release.RUNTIME_FILES}
         files = {'Carrier-Navigator-source/' + name: b'owned' for name in required}

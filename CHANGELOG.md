@@ -1,13 +1,23 @@
 # Changelog
 
-## Unreleased - official name
+## 0.1.0-client-beta.1 - awaiting owner artwork
+
+- Preserve owner-accepted alpha.4 navigation and the exact motion-enabled SDK
+  from the ordinary combined ModLoader test. Record general acceptance separately
+  from unverified combat, exhaustive save/load and multiplayer cases.
+- Explain functions, mandatory DLL, manual and ModLoader installation, and why
+  a manually copied DLL must be replaced after an SDK runtime update.
+- Recommend compatible CC2 ModLoader for reviewed DLL installation and upgrades.
+- Freeze an eight-file Steam payload. Keep complete owned source, tests and
+  packaging tools on GitHub. Await owner pictures before publication.
 
 - Fix the public mod name as **Carrier: Autopilot Waypoints** in metadata,
   player documentation and Workshop materials. Use Autopilot Waypoints on the
   compact in-game panel and Carrier Autopilot Waypoints for the Windows player
   folder. Release archive names use Carrier-Autopilot-Waypoints.
 - Preserve existing repository URLs, module/settings identity and frozen test
-  receipts. This naming update is staged for the next closed-game activation.
+  receipts. The package verifier allows only the three exact title string changes
+  from the accepted candidate and records their before/after hashes.
 
 ## 0.1.0-alpha.4 - route repeat fix
 
@@ -26,14 +36,6 @@
 - Recover selected power as the course aligns; retain endpoint slowdown and
   normal engine, fuel, disabled-state and manual-control gates.
 - Use the revised matching motion-enabled SDK; alpha.2 acceptance remains historical.
-
-## 0.1.0-client-beta.1 - release preparation
-
-- Preserve owner-accepted alpha.2 gameplay bytes and the exact motion-enabled SDK.
-- Add detailed controls, power/defence behavior, installation and Revolution notes.
-- Stage a nine-file Steam payload; keep all source, tests and tools on GitHub.
-- Record owner acceptance separately from offline checks and unverified combat.
-- Await owner artwork before publishing the release.
 
 ## 0.1.0-alpha.2 - unpublished
 

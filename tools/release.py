@@ -21,6 +21,19 @@ RUNTIME_FILES = (
     'content/scripts/library_custom_0.lua',
 )
 STEAM_FILES = ('mod.xml', 'LICENSE', *RUNTIME_FILES)
+# The owner tested alpha.4 before choosing the public title. These literal
+# presentation changes are the only permitted differences from that candidate.
+BRANDING_REPLACEMENTS = {
+    'content/bridge/main.lua': (
+        (b"'Carrier Navigator requires the updated motion-enabled CC2X 0.10 test runtime'",
+         b"'Carrier: Autopilot Waypoints requires the updated motion-enabled CC2X 0.10 test runtime'"),
+        (b"'Carrier Navigator: native navigation, cruise control and team-contact defence ready'",
+         b"'Carrier: Autopilot Waypoints: native navigation, cruise control and team-contact defence ready'"),
+    ),
+    'content/scripts/library_custom_0.lua': (
+        (b"'CARRIER NAVIGATOR'", b"'AUTOPILOT WAYPOINTS'"),
+    ),
+}
 
 
 def sha(data):
@@ -36,6 +49,14 @@ def safe_name(name):
     if not name or '\\' in name or path.is_absolute() or '..' in path.parts or ':' in name:
         raise ValueError('Unsafe release path')
     return path
+
+
+def branded_candidate(name, data):
+    for before, after in BRANDING_REPLACEMENTS.get(name, ()):
+        if data.count(before) != 1:
+            raise ValueError('Expected branding literal missing or ambiguous: ' + name)
+        data = data.replace(before, after)
+    return data
 
 
 def validate_payload(root, candidate, receipt, acceptance):
@@ -59,10 +80,12 @@ def validate_payload(root, candidate, receipt, acceptance):
         files[name] = path.read_bytes()
     for name in RUNTIME_FILES:
         key = 'Carrier Navigator/' + name
-        digest = sha(files[name])
+        accepted = (candidate / key).read_bytes()
+        digest = sha(accepted)
         if (digest != receipt['files'][key]
-                or digest != sha((candidate / key).read_bytes())
                 or digest != acceptance['functional_sha256'].get(name)):
+            raise ValueError('Accepted candidate hash changed: ' + name)
+        if files[name] != accepted and files[name] != branded_candidate(name, accepted):
             raise ValueError('Gameplay differs from the accepted candidate: ' + name)
     if files['LICENSE'] != (candidate / 'Carrier Navigator/LICENSE').read_bytes():
         raise ValueError('Accepted package license changed')
@@ -138,9 +161,15 @@ def main():
             if archive.read('Carrier-Navigator-source/' + name) != files[name]:
                 raise ValueError('Committed gameplay source differs from accepted bytes')
     player = zip_files({PLAYER_FOLDER + '/' + name: data for name, data in files.items()})
+    branding = {name: {'accepted_sha256': acceptance['functional_sha256'][name],
+            'release_sha256': sha(files[name])}
+        for name in RUNTIME_FILES if sha(files[name]) != acceptance['functional_sha256'][name]}
     metadata = {'schema': 1, 'release_tag': 'v' + version, 'version': version,
         'source_commit': commit, 'candidate_source_commit': receipt['source_commit'],
-        'runtime_sha256': receipt['sdk_sha256'], 'functional_payload_matches_accepted_candidate': True,
+        'runtime_sha256': receipt['sdk_sha256'],
+        'functional_payload_matches_accepted_candidate': not branding,
+        'presentation_only_title_changes': branding,
+        'accepted_gameplay_preserved': True,
         'workshop_files': {name: sha(data) for name, data in sorted(files.items())},
         'workshop_file_count': len(files), 'source_file_count': len(source_names),
         'offline_scenarios': tests['scenarios'], 'runtime_acceptance': acceptance,

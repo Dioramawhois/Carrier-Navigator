@@ -4,11 +4,11 @@ Give your carrier a route, set its engine power and return to commanding aircraf
 Carrier: Autopilot Waypoints adds carrier navigation to the **same aviation-control map**
 used for aircraft orders, with optional threat-triggered defensive arming.
 
-**0.1.0-alpha.4**, with 0.1.0-client-beta.1 being prepared, targets Windows CC2
+**0.1.0-client-beta.1**, awaiting owner artwork, targets Windows CC2
 1.5.18-r2, local single-player and
 the matching **CC2X SDK 0.10.0-dev**. Stock and original Revolution can use the
-addon independently of Island Airfields. Publication is waiting for owner artwork
-and the owner's check of the new helm/turning changes.
+addon independently of Island Airfields. The owner accepted the alpha.4 combined
+ModLoader test; publication waits for their artwork.
 
 ## Plot and adjust a route
 
@@ -45,7 +45,7 @@ and commanded forward power through normal replicated control factors. Turning
 smoothly reduces ahead power according to course error, retaining 35% of the
 selected setting for a reversal away from the native endpoint. Power rises
 smoothly as the ship aligns again. Endpoint slowdown and engine/fuel gates still
-apply. These changes await owner gameplay acceptance.
+apply. These changes are included in the owner-accepted alpha.4 experience.
 
 Moving the physical helm or throttle cancels automatic navigation. Use Start
 explicitly to resume. The module also releases control if it loses its lease,
@@ -85,10 +85,11 @@ The required native runtime is distributed separately in
 A Workshop subscription downloads files; it does not update a DLL beside the
 game executable automatically.
 
-The owner accepted the aviation-map/navigation revision in a fresh private game
-copy using the Revolution-containing mod set. That alpha.2 confirmation predates
-the alpha.3 helm/turning changes. The new exact candidate needs owner acceptance
-before release. Neither confirmation nor offline checks separately certify
+The owner accepted alpha.4 in the ordinary Steam installation through ModLoader
+with Revolution after the helm/turning and route-loop corrections. The exact
+tested runtime is preserved. Only three public-title string literals differ in
+the release's Lua files; the packager checks and reports those changes explicitly.
+Neither general owner confirmation nor offline checks separately certify
 live combat, countermeasure expenditure or every save/load scenario.
 Remote multiplayer, dedicated servers and native macOS runtime are unsupported
 by this candidate; the motion backend refuses multi-peer sessions.
