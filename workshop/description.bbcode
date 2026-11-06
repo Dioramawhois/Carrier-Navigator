@@ -1,10 +1,10 @@
 [h1]Carrier: Autopilot Waypoints[/h1]
-Give your carrier a route, choose its engine power and get back to commanding aircraft. Carrier: Autopilot Waypoints puts navigation and optional defensive automation on the [b]same aviation-control map[/b] where you already issue aircraft orders.
+Give your carrier a route, choose engine power and return to commanding aircraft. Navigation and optional defensive automation use the [b]same aviation-control map[/b] as aircraft orders.
 
 [h2]Plot a route without changing stations[/h2]
 Drag your carrier icon to a destination, open [b]NAV[/b] in the upper-right corner and press [b]START AUTOPILOT[/b]. The carrier follows the game's native sea route while you work with your aircraft.
 
-Use [b]+ POINT[/b], then click the map once, to extend the route. Repeat for additional points, up to 20. Drag an existing point to reposition it without deleting the points that follow it. A short click on the carrier keeps the normal carrier interaction. Aircraft orders, cameras and loadout windows continue through the original screen.
+Use [b]+ POINT[/b], then click the map once, to extend the route, up to 20 points. Drag points to reposition them without deleting the following route. A short carrier click keeps the normal interaction. Aircraft orders, cameras and loadout windows continue through the original screen.
 
 [b]To repeat a route, drop a waypoint onto another waypoint on the same carrier route.[/b] Drop the final point onto the first to loop the entire route. The points stay in place; the native repeat link closes the route and is visible with Revolution too.
 
@@ -13,22 +13,22 @@ Dragging the carrier itself replaces its previous route. [b]PAUSE AUTOPILOT[/b] 
 [h2]Full native power, not an invented speed limit[/h2]
 Choose [b]-10%[/b], [b]+10%[/b] or [b]FULL[/b] in the same panel. The range is 10-100%, default 100%. Actual speed is shown separately in knots.
 
-[b]FULL allows the game's full native forward output.[/b] There is no fixed 25-knot or real-world maximum. The ship's hull, engine condition, waves, turns and mods such as Revolution determine how fast it actually moves. Percentages are power settings, not guaranteed cruising speeds. The mod does not teleport the carrier, overwrite its velocity or change hull thrust/drag to force a number.
+[b]FULL allows the game's full native forward output.[/b] There is no fixed 25-knot or real-world maximum. Hull physics, engine condition, waves, turns and Revolution determine actual speed. Percentages are power settings, not guaranteed speeds; the mod does not force velocity or change hull thrust/drag.
 
 [h2]Live helm controls and smoother turns[/h2]
-The physical wheel and throttle lever follow the autopilot's live commands through the game's normal animation. Forward power adjusts smoothly with the course change instead of dropping into turn-in-place idle. As the carrier straightens it returns towards your selected power. Normal endpoint slowdown, engine output and fuel limits still apply.
+The physical wheel and throttle lever follow live navigation commands. Forward power adjusts smoothly through turns instead of dropping into turn-in-place idle, then recovers towards your setting as the ship straightens. Native endpoint slowdown, engine output and fuel limits apply.
 
 [h2]Defensive arming when a threat is detected[/h2]
 Enable [b]DEFENCE: ON[/b] to arm relevant defensive systems when your team currently detects a threat by [b]radar OR visual contact[/b]. Depending on the threat, this can enable AA, CIWS and the game's native torpedo/countermeasure automation. Hidden enemies and friendly projectiles do not trigger it.
 
-The game handles engagement and consumable use. Offensive artillery, cruise missiles and offensive torpedo arming remain under normal control. The mod arms native defensive automation instead of repeatedly issuing countermeasure fire commands. A manually switched-off defensive system stays respected until you explicitly enable defence automation again. Turning automation off does not disarm systems already enabled.
+The game handles engagement and consumables. Offensive artillery, cruise missiles and offensive torpedo arming stay under normal control. There are no repeated countermeasure fire commands. Manual off switches are respected until you enable automation again. Disabling automation does not disarm systems already enabled.
 
 Defence works independently of the route panel and can remain enabled while navigation is paused. It starts disabled in each new session.
 
 [h2]Native saves and Revolution support[/h2]
-Route points and navigation mode use normal game save data. An active saved route is adopted after loading; power is a user preference. There is no one global route shared across your saves.
+Routes and navigation mode use native save data; an active saved route is adopted after loading. Power is a preference. Routes are not shared globally across saves.
 
-With [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3460002110]Revolution[/url], enable the original mod alongside this addon. Revolution's command permissions stay in force. This addon can draw its carrier route when Revolution hides ordinary carrier waypoints, without changing that option. No Revolution files, full game screens or private gameplay DLL are bundled. Island Airfields is optional.
+Enable [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3460002110]original Revolution[/url] alongside this addon when using it. Its command permissions remain in force. The carrier route stays visible even when Revolution hides normal carrier waypoints. No Revolution files or full game screens are bundled. Island Airfields is optional.
 
 [h2]Required DLL: CC2X SDK 0.10.0-dev[/h2]
 [b]This mod requires the matching native dinput8.dll. Subscribing to the Workshop mod alone is not enough.[/b] The DLL supplies the carrier motion and control APIs that the game's ordinary Lua interface does not expose. It belongs to the separate [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3833014670]CC2X SDK[/url]; no DLL is hidden inside this addon. SDK 0.9/0.8 cannot run its navigation.
@@ -44,7 +44,7 @@ Use Windows Carrier Command 2 1.5.18-r2. Choose one installation method below.
 [*]Wait for the selection to finish applying, then click [b]Launch[/b]. No terminal, compiler or technical configuration editing is needed.
 [/olist]
 
-ModLoader checks the supported game and exact DLL, backs up a recognized previous runtime and preserves an unknown installed loader. If it reports an incompatible loader, resolve that identified conflict before launching this addon.
+ModLoader checks the game and exact DLL, backs up a recognized previous runtime and preserves unknown loaders. Resolve any reported incompatible-loader conflict before launching this addon.
 
 [h2]Alternative: install the DLL manually[/h2]
 [olist]
@@ -59,12 +59,11 @@ ModLoader checks the supported game and exact DLL, backs up a recognized previou
 For either method: open the aviation-control map, drag your carrier to a destination, then choose [b]NAV > START AUTOPILOT[/b].
 
 [h2]Important: reinstall the DLL after SDK updates[/h2]
-[b]Steam updating the Workshop SDK does not replace a DLL that you copied into the game folder manually.[/b] After an SDK runtime update, close the game and repeat the manual copy using the new matching DLL. Updating only this Lua addon does not always require a new DLL; follow its stated SDK requirement.
+[b]Steam updating the Workshop SDK does not replace a manually copied game-folder DLL.[/b] After an SDK runtime update, close the game and copy the new matching DLL again. A Lua-addon update alone does not always require a new DLL; check its SDK requirement.
 
-[b]We recommend CC2 ModLoader for installation and future DLL updates.[/b] Update ModLoader to a release supporting the new SDK, let Steam finish its downloads, then open ModLoader and let the selected set apply before launching. It upgrades reviewed runtimes with a backup; it does not silently trust every future DLL. Always close the game before replacing an installed runtime.
+[b]We recommend CC2 ModLoader for installation and DLL updates.[/b] Use a release supporting the new SDK, finish Steam downloads, then let ModLoader apply the selected set before launching. It upgrades reviewed runtimes with a backup; future DLLs still need review. Close the game before replacing its DLL.
 
 [url=https://github.com/Dioramawhois/Carrier-Navigator/blob/main/docs/INSTALLATION.md]Installation and controls[/url]
-[url=https://github.com/Dioramawhois/Carrier-Command-2-extender/releases/tag/0.10.0-dev]Matching SDK, source and checksums[/url]
 
 [h2]Client beta scope[/h2]
 Windows CC2 1.5.18-r2, [b]local single-player only[/b]. The owner accepted the revised aviation-map navigation with Revolution; the functional files and exact tested SDK are preserved for this release. Live combat, countermeasure expenditure and broader save/load coverage have not been separately accepted. Remote multiplayer, dedicated servers and native macOS runtime are unsupported. Native sea routing is not a guarantee of collision avoidance.
