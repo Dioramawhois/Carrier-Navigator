@@ -102,7 +102,7 @@ python tools/release.py --tested-candidate build/candidates/alpha2-02 --acceptan
 ```
 
 Owned real-Lua fixtures are offline checks, separate from owner game acceptance.
-The release tool verifies the accepted functional hashes and creates a **nine-file
+The release tool verifies the accepted functional hashes and creates a **eight-file
 Workshop payload**, a player ZIP, a complete committed source ZIP and separate
 evidence. Tests, tools, private test observers and release reports never enter
 the Steam payload. See [release procedure](docs/RELEASING.md).

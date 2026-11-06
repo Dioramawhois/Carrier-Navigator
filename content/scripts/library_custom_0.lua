@@ -1,6 +1,13 @@
 -- SPDX-License-Identifier: GPL-3.0-or-later
--- Appends to the aviation-control map; never copies stock/Revolution screens.
+-- Owned aviation-map UI through the game's standard custom-library slot.
+-- Handles both library-before-screen and begin_load-time execution without
+-- replacing a screen or competing for a merged SDK screen descriptor.
 do
+    local installed=false
+    local function install()
+        if installed or type(update)~='function' or type(g_drag)~='table' or
+            type(get_is_vehicle_waypoint_available)~='function' then return end
+        installed=true
     local previous_update,previous_input,previous_pointer=update,input_event,input_pointer
     local open,adding,consumed,announced,announce_ticks=false,false,false,false,0
     local px,py,hovered,width,height=0,0,false,256,256
@@ -150,4 +157,15 @@ do
         elseif event==e_input.back and action==e_input_action.press and open then open,adding=false,false;return end
         return previous_input(event,action)
     end
+        if cc2x and type(cc2x.log)=='function' then cc2x.log('CARRIER_NAVIGATOR_UI_READY entry=library_custom_0') end
+    end
+    local previous_load=begin_load
+    if type(previous_load)=='function' then
+        function begin_load(...)
+            local results=table.pack(previous_load(...))
+            install()
+            return table.unpack(results,1,results.n)
+        end
+    end
+    install()
 end

@@ -16,8 +16,7 @@ RUNTIME_FILES = (
     'content/bridge/runtime.lua',
     'content/bridge/cruise.lua',
     'content/bridge/defence.lua',
-    'content/cc2x/screen_extensions.json',
-    'content/cc2x/ui/navigator.lua',
+    'content/scripts/library_custom_0.lua',
 )
 STEAM_FILES = ('mod.xml', 'LICENSE', *RUNTIME_FILES)
 
@@ -68,10 +67,6 @@ def validate_payload(root, candidate, receipt, acceptance):
     bridge = json.loads(files['content/bridge.json'])
     if bridge != {'id': 'carrier_navigator', 'scripts': ['bridge/main.lua']}:
         raise ValueError('Private observer or unexpected entrypoint in release')
-    descriptor = json.loads(files['content/cc2x/screen_extensions.json'])
-    if descriptor != {'schema': 1, 'extensions': [{'screen': 'scripts/screen_vehicle_control.lua',
-                                                 'source': 'cc2x/ui/navigator.lua'}]}:
-        raise ValueError('Private bootstrap or unexpected screen in release')
     return files
 
 

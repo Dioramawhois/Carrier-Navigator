@@ -32,4 +32,4 @@ The owner accepted the revised navigation experience with Revolution. This clien
 beta is local single-player only. Live combat/countermeasure expenditure and
 broader save/load cases are not separately certified; remote/dedicated/native
 macOS operation is unsupported. Full source and developer material are on GitHub;
-the Steam payload contains only nine functional/license files.
+the Steam payload contains only eight functional/license files.

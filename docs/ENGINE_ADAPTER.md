@@ -16,7 +16,10 @@ ceiling. Steering/pathfinding and physical acceleration remain native;
 transform, velocity, hull thrust and drag are not overwritten. The former
 synthetic steering/PID controller is removed from the shipped module.
 
-The aviation helper wraps installed screen callbacks. Aircraft and short carrier
+The owned library_custom_0.lua entry wraps installed aviation callbacks.
+It installs only when the aviation-screen contract exists and defers through
+normal begin_load when libraries execute first. This avoids a duplicate
+screen-extension target with Island Airfields in current ModLoader. Aircraft and short carrier
 taps delegate to the original screen. Carrier point moves preserve the route tail
 and repeat links. Attack/wait/altitude editing for carrier points is outside this
 UI. Native waypoints are the only route store; settings store power preference.

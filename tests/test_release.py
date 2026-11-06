@@ -17,8 +17,6 @@ class ReleaseTests(unittest.TestCase):
         root, candidate = Path(directory) / 'source', Path(directory) / 'candidate'
         files = {name: b'owned' for name in release.STEAM_FILES}
         files['content/bridge.json'] = b'{"id":"carrier_navigator","scripts":["bridge/main.lua"]}'
-        files['content/cc2x/screen_extensions.json'] = json.dumps({'schema': 1, 'extensions': [
-            {'screen': 'scripts/screen_vehicle_control.lua', 'source': 'cc2x/ui/navigator.lua'}]}).encode()
         receipt = {'source_commit': 'accepted', 'sdk_sha256': 'runtime', 'files': {}}
         for name, data in files.items():
             for base in (root, candidate / 'Carrier Navigator'):
@@ -37,7 +35,7 @@ class ReleaseTests(unittest.TestCase):
             (root / 'tests').mkdir()
             (root / 'tests/private.lua').write_text('fixture')
             files = release.validate_payload(root, candidate, receipt, acceptance)
-            self.assertEqual(len(files), 9)
+            self.assertEqual(len(files), 8)
             self.assertIn('LICENSE', files)
             self.assertFalse(any(name.startswith('tests/') for name in files))
 
