@@ -1,5 +1,19 @@
 # Connected engine adapter
 
+The unpublished 0.1.1 candidate negotiates navigation capability once per
+session. The mandatory motion API works on SDK 0.10; the optional navigation API
+selects coastal mode only when all three functions are available and the backend
+reports ready support. Absent, partial or unavailable optional support selects
+the published native policy. No version strings select behavior. A selected
+coastal backend losing availability stops; it never changes an active route to
+the native policy. A new session negotiates again.
+
+Both modes share the same bounded power controller. Native mode keeps the
+published computation exactly; coastal mode adds validated exact-goal admission
+and the coast-distance limit. The UI receives `navigation_mode` (0 native,
+1 coastal) and navigation status 8 for a following native route. Existing route,
+speed and defence controls remain usable while the optional upgrade hint shows.
+
 The independent Bridge module uses the optional CC2X 0.10 motion interface.
 runtime.lua checks native authority for every screen request, adopts native
 saved mode/points, renews an owner/session/carrier lease each tick and publishes

@@ -13,6 +13,15 @@ spec.loader.exec_module(release)
 
 
 class ReleaseTests(unittest.TestCase):
+    def test_beta_publication_requires_explicit_authorization_and_keeps_validation_truthful(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root,candidate,receipt,acceptance=self.fixture(directory)
+            acceptance.update(schema=2,kind='owner-authorized-beta',publication_authorized=True,game_runtime_tested=False)
+            with self.assertRaises(ValueError):release.validate_payload(root,candidate,receipt,acceptance)
+            release.validate_payload(root,candidate,receipt,acceptance,authorized_beta=True)
+            acceptance['publication_authorized']=False
+            with self.assertRaises(ValueError):release.validate_payload(root,candidate,receipt,acceptance,authorized_beta=True)
+
     def fixture(self, directory):
         root, candidate = Path(directory) / 'source', Path(directory) / 'candidate'
         files = {name: b'owned' for name in release.STEAM_FILES}

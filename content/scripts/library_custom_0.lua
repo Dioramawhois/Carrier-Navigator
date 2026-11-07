@@ -98,10 +98,15 @@ do
         button(w-65,12,59,'NAV',function()open=not open;adding=false end)
         if not open then return end
         local x,y,panel=w-152,31,146
-        update_ui_rectangle(x,y,panel,143,background)
+        update_ui_rectangle(x,y,panel,155,background)
         text(x+5,y+4,'AUTOPILOT WAYPOINTS',panel-10)
         local state=read('state',id,0)
-        text(x+5,y+17,not ready and 'UNAVAILABLE' or state==2 and 'FOLLOWING ROUTE' or 'PAUSED / MANUAL',panel-10)
+        local navigation_labels={[1]='PLOTTING ROUTE',[2]='FOLLOWING ROUTE',[3]='ROUTE BLOCKED',
+            [4]='ARRIVED AT POINT',[5]='UPDATE SDK REQUIRED',[6]='ROUTE SETUP FAILED',[7]='NAVIGATION STOPPED',
+            [8]='FOLLOWING NATIVE ROUTE'}
+        local status=not ready and 'UNAVAILABLE' or navigation_labels[read('navigation_status',id,0)] or
+            (state==2 and 'FOLLOWING ROUTE' or 'PAUSED / MANUAL')
+        text(x+5,y+17,status,panel-10)
         text(x+5,y+30,string.format('NATIVE POWER: %d%%',read('speed',id,100)),panel-10)
         text(x+5,y+42,string.format('ACTUAL: %.1f KN',read('actual',id,0)),panel-10)
         button(x+5,y+55,42,'-10%',function()send('speed',math.max(10,read('speed',id,100)-10))end,ready)
@@ -113,6 +118,8 @@ do
         local defence=read('defence',id,0)==1
         button(x+5,y+109,136,defence and 'DEFENCE: ON' or 'DEFENCE: OFF',function()send('defence',defence and 0 or 1)end,ready)
         text(x+5,y+127,adding and 'CLICK MAP ONCE' or 'DRAG CARRIER / POINT',panel-10)
+        local mode=read('navigation_mode',0,-1)
+        if mode>=0 then text(x+5,y+139,mode==1 and 'COASTAL: ENABLED' or 'COASTAL: UPDATE SDK',panel-10)end
     end
     function input_pointer(is_hovered,x,y)
         px,py,hovered=x,y,is_hovered

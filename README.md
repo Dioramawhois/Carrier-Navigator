@@ -1,5 +1,12 @@
 # Carrier: Autopilot Waypoints
 
+**0.1.1-client-beta.1** adds optional coastal navigation and SDK compatibility.
+SDK 0.10 keeps the published native autopilot; optional SDK 0.11 navigation
+support enables close coastal approach. The panel shows `COASTAL: UPDATE SDK`
+when that optional capability is absent, while normal controls remain enabled.
+See the
+[coastal correction](docs/COASTAL_NAVIGATION.md). The earlier release and its acceptance are documented below.
+
 [Steam Workshop](https://steamcommunity.com/sharedfiles/filedetails/?id=3834928522)
 | [Client beta release](https://github.com/Dioramawhois/Carrier-Navigator/releases/tag/v0.1.0-client-beta.1)
 | [Gameplay video](https://www.youtube.com/watch?v=HidFBf5PSQg)
@@ -110,6 +117,12 @@ python tools/test.py --sdk ../cc2x-navigation --zig ../cc2x/.deps/zig-x86_64-win
 python -m unittest discover -s tests -p test_release.py
 python tools/release.py --tested-candidate build/candidates/alpha2-02 --acceptance docs/verification/OWNER_ACCEPTANCE_2026-11-06.json --output build/release/NEW
 ```
+
+For the compatibility matrix, add `--legacy-sdk PATH-TO-SDK-0.10` to test the
+older real Lua facade against its recorded build provenance as well. Owned
+synthetic native callbacks exercise complete module loading, Start and Pause;
+the native cruise is also compared with the frozen published 0.1.0 policy over
+2,000 changing frames. This is offline evidence, not live-game acceptance.
 
 Owned real-Lua fixtures are offline checks, separate from owner game acceptance.
 The release tool verifies the accepted functional hashes and creates a **eight-file

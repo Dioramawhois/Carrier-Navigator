@@ -1,5 +1,12 @@
 # Release procedure
 
+The owner requested SDK update notifications and publication of all updates on
+2026-11-07. The 0.1.1 beta uses an explicit schema-2 owner publication record and
+`--authorized-beta`; it does not reuse alpha.4 gameplay acceptance for new code.
+Exact candidate/SDK/input hashes and matching offline regressions remain required.
+The old accepted-gameplay path and its tests stay intact. Validation metadata
+records actual evidence; public feature copy follows the owner's requested style.
+
 Published on 2026-11-07: Workshop item 3834928522 and GitHub client beta 1.
 SDK 0.10.0-dev and compatible CC2 ModLoader beta 11 were released separately.
 All eight mod files and twelve SDK Workshop files were redownloaded and matched

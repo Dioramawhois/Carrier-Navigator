@@ -59,8 +59,12 @@ def branded_candidate(name, data):
     return data
 
 
-def validate_payload(root, candidate, receipt, acceptance):
-    if (acceptance.get('game_runtime_tested') is not True
+def validate_payload(root, candidate, receipt, acceptance, *, authorized_beta=False):
+    explicit_beta=(authorized_beta and acceptance.get('schema')==2 and
+        acceptance.get('publication_authorized') is True and
+        acceptance.get('kind')=='owner-authorized-beta' and
+        acceptance.get('game_runtime_tested') is False)
+    if ((acceptance.get('game_runtime_tested') is not True and not explicit_beta)
             or acceptance.get('candidate_source_commit') != receipt['source_commit']
             or acceptance.get('runtime_sha256') != receipt['sdk_sha256']):
         raise ValueError('Owner acceptance does not match the tested candidate/runtime')
@@ -131,6 +135,8 @@ def main():
     parser.add_argument('--tested-candidate', type=Path, required=True)
     parser.add_argument('--acceptance', type=Path, required=True)
     parser.add_argument('--output', type=Path, required=True)
+    parser.add_argument('--authorized-beta', action='store_true',
+                        help='Use explicit owner beta-publication authorization without claiming game acceptance')
     args = parser.parse_args()
     candidate = args.tested_candidate.resolve(strict=True)
     output = args.output.resolve()
@@ -142,7 +148,7 @@ def main():
     commit = git('rev-parse', 'HEAD').decode().strip()
     receipt = json.loads((candidate / 'BUILD_CHECK.json').read_text(encoding='utf-8'))
     acceptance = json.loads(args.acceptance.read_text(encoding='utf-8'))
-    files = validate_payload(ROOT, candidate, receipt, acceptance)
+    files = validate_payload(ROOT, candidate, receipt, acceptance,authorized_beta=args.authorized_beta)
     import xml.etree.ElementTree as ET
     version = ET.fromstring(files['mod.xml']).attrib['version']
     if not re.fullmatch(r'\d+\.\d+\.\d+-client-beta\.\d+', version):
@@ -171,7 +177,8 @@ def main():
         'runtime_sha256': receipt['sdk_sha256'],
         'functional_payload_matches_accepted_candidate': not branding,
         'presentation_only_title_changes': branding,
-        'accepted_gameplay_preserved': True,
+        'accepted_gameplay_preserved': acceptance.get('game_runtime_tested') is True,
+        'owner_authorized_beta': args.authorized_beta,
         'workshop_files': {name: sha(data) for name, data in sorted(files.items())},
         'workshop_file_count': len(files), 'source_file_count': len(source_names),
         'offline_scenarios': tests['scenarios'], 'runtime_acceptance': acceptance,

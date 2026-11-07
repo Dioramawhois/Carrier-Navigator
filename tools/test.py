@@ -18,6 +18,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--sdk', type=Path, required=True)
     parser.add_argument('--zig', type=Path, required=True)
+    parser.add_argument('--legacy-sdk', type=Path, help='Also test the provenance-verified older SDK Lua facade')
     args = parser.parse_args()
     sdk = args.sdk.resolve(strict=True)
     zig = args.zig.resolve(strict=True)
@@ -59,13 +60,22 @@ def main():
         runtime_source += f'local {name} = (function()\n{source}\nend)()\n'
     runtime_policy = build / 'runtime-test.lua'
     runtime_policy.write_text(runtime_source+'return {new=function(cc2) return Runtime.new(cc2,Cruise,Defence) end}\n', encoding='utf-8')
+    cruise_policy = build / 'cruise-test.lua'
+    cruise_policy.write_text('local reference=(function()\n'+
+        (ROOT/'tests/fixtures/native_cruise_0_1_0.lua').read_text(encoding='utf-8')+
+        '\nend)()\nlocal current=(function()\n'+
+        (ROOT/'content/bridge/cruise.lua').read_text(encoding='utf-8')+
+        '\nend)()\ncurrent.native_reference=reference.new\nreturn current\n', encoding='utf-8')
     ui_policy = build / 'ui-test.lua'
     ui_policy.write_text((ROOT / 'tests/ui_setup.lua').read_text(encoding='utf-8')+'\n'+
                          (ROOT / 'content/scripts/library_custom_0.lua').read_text(encoding='utf-8'), encoding='utf-8')
     entry_policy = build / 'entry-test.lua'
     entry_policy.write_text('return function()\n'+(ROOT / 'content/scripts/library_custom_0.lua').read_text(encoding='utf-8')+'\nend\n', encoding='utf-8')
-    for name in ('defence', 'cruise', 'runtime', 'ui', 'entry'):
-        policy = runtime_policy if name=='runtime' else ui_policy if name=='ui' else entry_policy if name=='entry' else ROOT / 'content/bridge' / (name + '.lua')
+    main_policy = build / 'main-test.lua'
+    main_policy.write_text((ROOT / 'tests/main_setup.lua').read_text(encoding='utf-8')+'\n'+
+                           (ROOT / 'content/bridge/main.lua').read_text(encoding='utf-8'), encoding='utf-8')
+    for name in ('defence', 'cruise', 'runtime', 'ui', 'entry', 'main'):
+        policy = runtime_policy if name=='runtime' else cruise_policy if name=='cruise' else ui_policy if name=='ui' else entry_policy if name=='entry' else main_policy if name=='main' else ROOT / 'content/bridge' / (name + '.lua')
         fixture = ROOT / 'tests' / (name + '.lua')
         if not policy.is_file() or not fixture.is_file():
             raise ValueError('Missing policy/fixture: ' + name)
@@ -79,12 +89,41 @@ def main():
         if len(marker) != 1:
             raise ValueError('Missing scenario count: ' + name)
         scenarios += int(marker[0].split()[1])
+    facade_results = []
+    for facade_sdk in (sdk, *([args.legacy_sdk.resolve(strict=True)] if args.legacy_sdk else [])):
+        facade_path=facade_sdk/'sdk/cc2.lua'
+        facade_build=json.loads((facade_sdk/'dist/dinput8.build.json').read_text())
+        facade_hash=sha(facade_path)
+        if facade_build['source_sha256'].get('sdk/cc2.lua') != facade_hash:
+            raise ValueError('SDK facade differs from its build provenance')
+        facade_policy=build/'sdk-facade-test.lua'
+        facade_policy.write_text('local sdk=(function()\n'+facade_path.read_text(encoding='utf-8')+
+            '\nend)()\n'+runtime_source+
+            "local function require(name)\nif name=='cc2'then return sdk\n"+
+            "elseif name=='bridge.runtime'then return Runtime\nelseif name=='bridge.cruise'then return Cruise\n"+
+            "elseif name=='bridge.defence'then return Defence end\nerror(name)\nend\n"+
+            'return {sdk=sdk,entry=function()\n'+(ROOT/'content/bridge/main.lua').read_text(encoding='utf-8')+
+            '\nend}\n',encoding='utf-8')
+        result=subprocess.run([str(runner),str(facade_policy),str(ROOT/'tests/sdk_facade.lua')],
+                              capture_output=True,text=True,timeout=30)
+        print(result.stdout,end='')
+        if result.returncode:
+            print(result.stderr,end='');raise SystemExit(result.returncode)
+        marker=[line for line in result.stdout.splitlines() if line.startswith('SCENARIOS ')]
+        if len(marker)!=1 or sha(facade_path)!=facade_hash:raise ValueError('Invalid facade test evidence')
+        scenarios+=int(marker[0].split()[1])
+        facade_results.append({'facade_sha256':facade_hash,'sdk_artifact_sha256':facade_build['artifact_sha256'],
+                               'scenarios':int(marker[0].split()[1]),'validation':'real-sdk-lua-facade-synthetic-native-callbacks'})
     negative_controls = []
     mutations = [
         ('runtime', 'if motion.manual or s.was_active',
          'if false or s.was_active', 'manual_takeover_removed'),
         ('defence', '(c.detected == true or c.radar == true or c.visual == true)',
          '(c.detected == true or c.radar == true and c.visual == true)', 'radar_visual_or_replaced_with_and'),
+        ('runtime', 'precise=current~=0 and navigation_available()',
+         'precise=current~=0', 'optional_sdk_forced_on_legacy'),
+        ('runtime', 'if not precise then',
+         'if not precise or not navigation_available() then', 'coastal_failure_switches_to_native'),
     ]
     with tempfile.TemporaryDirectory(prefix='negative-controls-', dir=build) as temporary:
         for name, before, after, label in mutations:
@@ -106,6 +145,7 @@ def main():
               'source_sha256': hashes, 'runner_sha256': sha(runner),
               'compiler_sha256': sha(zig), 'lua_source_sha256': dependency_hashes,
               'sdk_artifact_sha256': evidence['artifact_sha256'],
+              'sdk_facades_tested':facade_results,
               'negative_controls_rejected': negative_controls,
               'game_runtime_tested': False, 'remote_multiplayer_tested': False,
               'runtime_adapter_tested': True, 'native_saved_route': True}
