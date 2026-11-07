@@ -2,7 +2,8 @@ local count = 0
 local function test(name,fn)
     local ok,why=pcall(fn);assert(ok,name..': '..tostring(why));count=count+1;print('PASS '..name)
 end
-local function fixture()
+local function fixture(options)
+    options=options or {}
     local f={generation=1,messages={},published={},calls={},contacts={},settings={},configurations={},events={},navigation_available=true,configure_ok=true,drive_ok=true}
     f.motion={id=42,team=0,can_control=true,manual=false,engine_on=true,active=false,mode=1,waypoints=2,speed_mps=0,
         guidance_ready=true,heading_error=0,path_distance=1000,lever=1}
@@ -52,6 +53,10 @@ local function fixture()
         f.calls[#f.calls].forward=forward
         return true
     end
+    if options.optional_missing then
+        cc2.carrier.navigation_available=nil;cc2.carrier.set_navigation=nil;cc2.carrier.navigation_state=nil
+    elseif options.optional_partial then cc2.carrier.navigation_state=nil end
+    if options.unavailable then f.navigation_available=false end
     local runtime=POLICY.new(cc2)
     function f:send(topic,value,id)self.messages[#self.messages+1]={topic=topic,value=value,subject=id or 42}end
     return runtime,f
@@ -139,10 +144,43 @@ test('navigation configuration failure releases and requires explicit Start to r
     f:send('start',1);r:update();assert(f.calls[#f.calls].active)
 end)
 
-test('unavailable navigation never silently falls back to legacy deep-water routing',function()
-    local r,f=fixture();f.navigation_available=false;r:update();f:send('start',1);r:update()
+test('losing an admitted coastal backend stops instead of switching the active route to native',function()
+    local r,f=fixture();r:update();f:send('start',1);r:update()
+    f.navigation_available=false;r:update()
     assert(f.published['ready:0']==0 and f.published['navigation_status:42']==5)
-    assert(#f.calls==1 and not f.calls[1].active and #f.configurations==0)
+    assert(#f.calls==2 and not f.calls[2].active and #f.configurations==1)
+    f.navigation_available=true;r:update();assert(#f.calls==2)
+end)
+
+test('old absent partial and unavailable optional APIs retain native autopilot',function()
+    for _,options in ipairs({{optional_missing=true},{optional_partial=true},{unavailable=true}})do
+        local r,f=fixture(options);r:update();f:send('start',1);r:update()
+        assert(f.published['ready:0']==1 and f.published['navigation_mode:0']==0)
+        assert(f.calls[#f.calls].active and f.calls[#f.calls].forward==1 and #f.configurations==0)
+        assert(f.published['navigation_status:42']==8)
+        f.navigation.blocked=true;f.navigation.distance=1;f.motion.speed_mps=60
+        r:update();assert(f.calls[#f.calls].forward==1 and #f.configurations==0)
+        f:send('pause',0);r:update();assert(not f.calls[#f.calls].active)
+    end
+end)
+
+test('native compatibility preserves saved routes speed defence and manual takeover',function()
+    local r,f=fixture({optional_missing=true});f.motion.mode=0;r:update()
+    assert(f.calls[1].active and f.motion.waypoints==2)
+    f:send('speed',50);r:update();assert(f.calls[#f.calls].power==.5 and f.settings.cruise_percent==50)
+    r:buttons(42);f:send('defence',1)
+    f.contacts={{id=70,team=1,kind=1,x=1000,y=100,z=0,detected=true}}
+    r:update();r:buttons(42);assert(f.buttons[1].on)
+    f.motion.manual=true;r:update();assert(not f.calls[#f.calls].active)
+    local calls=#f.calls;f.motion.manual=false;r:update();assert(#f.calls==calls)
+end)
+
+test('backend selection is stable during a session and renegotiated in the next session',function()
+    local r,f=fixture({unavailable=true});r:update();f:send('start',1);r:update()
+    f.navigation_available=true;r:update()
+    assert(f.published['navigation_mode:0']==0 and #f.configurations==0)
+    f.generation=2;r:update()
+    assert(f.published['navigation_mode:0']==1 and #f.configurations==1)
 end)
 
 test('initial configured route waits for native admission with a zero-power lease',function()

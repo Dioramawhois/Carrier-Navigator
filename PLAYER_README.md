@@ -1,7 +1,7 @@
-# Carrier: Autopilot Waypoints 0.1.1-alpha.1
+# Carrier: Autopilot Waypoints 0.1.1-alpha.2
 
-Windows CC2 1.5.18-r2, local single-player. Requires the matching CC2X SDK
-0.11.0-dev runtime supplied with this unpublished local test candidate.
+Windows CC2 1.5.18-r2, local single-player. SDK 0.10 retains normal navigation;
+the optional SDK 0.11 navigation API enables the coastal correction.
 The public beta's acceptance does not cover this build. See
 [coastal navigation notes](docs/COASTAL_NAVIGATION.md).
 
@@ -24,10 +24,12 @@ The public beta's acceptance does not cover this build. See
 
 The helm wheel and throttle lever now follow navigation commands. Ahead power
 adjusts smoothly through turns instead of falling to turn-in-place idle, then
-returns towards the selected setting as the ship straightens. This candidate
-keeps coastal destinations, admits shallow water and slows demand near the exact
-goal with a 25 m arrival radius. Land or failed routes show ROUTE BLOCKED and
-retain the order. Normal engine output, fuel and hull collision still apply.
+returns towards the selected setting as the ship straightens. With the optional
+coastal API, this candidate keeps coastal destinations, admits shallow water and
+slows demand near the exact goal with a 25 m arrival radius. Land or failed routes
+show ROUTE BLOCKED and retain the order. Otherwise the published native routing
+and power behavior remain available. The panel shows COASTAL: UPDATE SDK.
+Normal engine output, fuel and hull collision still apply.
 
 Native routes/navigation mode are saved by the game. An active saved route is
 adopted after loading; exact coastal-point retention during the first loaded
@@ -42,8 +44,11 @@ save/load coverage remain unverified; remote/dedicated sessions are unsupported.
 
 **The SDK DLL is required.** A Workshop subscription alone does not install
 **dinput8.dll beside carrier_command.exe**. Follow the manual DLL instructions
-or use a **CC2 ModLoader release explicitly supporting the matching SDK 0.11 build**.
+or use a **CC2 ModLoader release explicitly supporting the selected SDK build**.
 We recommend ModLoader for reviewed installation and DLL upgrades with backups.
+Updating this mod does not force an SDK update: SDK 0.11 is needed only for the
+new coastal behavior. If a selected coastal backend fails during a route, the
+autopilot stops and keeps the order rather than changing routing modes silently.
 After a manually installed SDK DLL is updated, close the game and copy the new
 matching DLL into the game folder again; Steam does not replace that copy.
 See [installation and updates](docs/INSTALLATION.md).

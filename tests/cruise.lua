@@ -120,4 +120,17 @@ test('missing unconfigured blocked or faulted navigation never requests forward'
         assert(cap==1 and forward==0,flag)
     end
 end)
+test('native compatibility matches published cruise across course power endpoint and reset changes',function()
+    local current,reference=POLICY.new('native'),POLICY.native_reference()
+    for i=1,2000 do
+        if i%173==0 then current.reset();reference.reset()end
+        local f={guidance_ready=i%53~=0,heading_error=math.sin(i)*math.pi,
+            path_distance=i%121,lever=(i%101)/100,speed_mps=i%200}
+        if i%71==0 then f.path_distance=-1 end
+        local percent=10+(i%10)*10
+        local a,b=current.step(f,percent,1/30)
+        local x,y=reference.step(f,percent,1/30)
+        assert(a==x and b==y,'published native demand changed at step '..i)
+    end
+end)
 print('SCENARIOS '..count)

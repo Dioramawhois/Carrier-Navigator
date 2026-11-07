@@ -1,5 +1,14 @@
 # Changelog
 
+## Unreleased - 0.1.1-alpha.2 SDK compatibility
+
+- Keep normal autopilot, speed, defence and route controls available on SDK 0.10.
+  Select the optional coastal API by capability at each session boundary.
+- Show COASTAL: UPDATE SDK without blocking native controls. Stop on failure of
+  an already selected coastal backend instead of changing its routing policy.
+- Verify native cruise against the published policy over 2,000 changing frames,
+  and exercise current/older real SDK Lua facades with synthetic native callbacks.
+
 ## Unreleased - 0.1.1-alpha.1 coastal navigation candidate
 
 - Require the optional SDK 0.11 surface-navigation interface and configure only

@@ -1,6 +1,6 @@
 -- SPDX-License-Identifier: GPL-3.0-or-later
 local M = {}
-local navigation_status={idle=0,waiting=1,following=2,blocked=3,arrived=4,unavailable=5,configuration=6,fault=7}
+local navigation_status={idle=0,waiting=1,following=2,blocked=3,arrived=4,unavailable=5,configuration=6,fault=7,native=8}
 local systems = {
     anti_air = {'carrier_weapons_active_0', 'carrier_weapons_active_1'},
     ciws = {'carrier_weapons_active_3', 'carrier_weapons_active_4', 'carrier_weapons_active_5', 'carrier_weapons_active_6'},
@@ -9,17 +9,18 @@ local systems = {
 }
 function M.new(cc2, Cruise, Defence)
     local states, generation, tick, enabled, catalog = {}, 0, 0, false, {}
+    local precise=false
     local speed = cc2.settings.get('cruise_percent', 100, 10, 100)
     local self = {}
     local function publish(topic, id, value) cc2.messages.publish(topic, id, value) end
     local function navigation_available()
         return type(cc2.carrier.navigation_available)=='function' and
             type(cc2.carrier.navigation_state)=='function' and
-            type(cc2.carrier.set_navigation)=='function' and cc2.carrier.navigation_available()
+            type(cc2.carrier.set_navigation)=='function' and cc2.carrier.navigation_available()==true
     end
     local function get_state(id)
         if not states[id] then states[id] = {running = false, was_active = false,
-            cruise = Cruise.new(), defence = Defence.new({aircraft_range_m = 6000,
+            cruise = Cruise.new(precise and 'coastal' or 'native'), defence = Defence.new({aircraft_range_m = 6000,
                 surface_range_m = 5000, missile_range_m = 4000, torpedo_range_m = 5000}),
             pending = {}, buttons = {}, manual_locks = {}, threats = 0, history = {},
             navigation_status=navigation_status.idle} end
@@ -30,6 +31,15 @@ function M.new(cc2, Cruise, Defence)
         cc2.carrier.set_motion(id,false,0)
     end
     local function navigate(id,s,motion)
+        if not precise then
+            -- The mandatory motion API remains the published native backend.
+            -- Optional coastal support is negotiated once per session; errors
+            -- in a selected coastal route never enter this compatibility path.
+            motion.navigation=nil;s.navigation_status=navigation_status.native
+            local power,forward=s.cruise.step(motion,speed,1/30)
+            if not cc2.carrier.drive_motion(id,power,forward)then release(id,s,navigation_status.fault)end
+            return
+        end
         if not navigation_available()then release(id,s,navigation_status.unavailable);return end
         if not cc2.carrier.set_navigation(id,{minimum_depth=0,arrival_radius=25})then
             release(id,s,navigation_status.configuration);return
@@ -75,10 +85,12 @@ function M.new(cc2, Cruise, Defence)
         local current = cc2.session.generation()
         if current ~= generation then
             states, generation, tick, enabled, catalog = {}, current, 0, false, {}
+            precise=current~=0 and navigation_available()
         end
         if current == 0 then return end
         tick = tick+1
-        publish('ready', 0, cc2.carrier.motion_available() and navigation_available() and 1 or 0)
+        publish('ready', 0, cc2.carrier.motion_available() and (not precise or navigation_available()) and 1 or 0)
+        publish('navigation_mode',0,precise and 1 or 0)
         local messages = cc2.messages.poll() or {}
         for _, m in ipairs(messages) do
             local motion = cc2.carrier.motion_state(m.subject)
@@ -113,7 +125,7 @@ function M.new(cc2, Cruise, Defence)
                     if motion.manual or s.was_active and not motion.active or motion.waypoints == 0 then
                         if s.running then
                             s.navigation_status=navigation_status.idle
-                            if motion.waypoints==0 and not motion.manual and navigation_available()then
+                            if motion.waypoints==0 and not motion.manual and precise and navigation_available()then
                                 local last=cc2.carrier.navigation_state(v.id)
                                 if last and last.configured and last.arrived then
                                     s.navigation=last;s.navigation_status=navigation_status.arrived

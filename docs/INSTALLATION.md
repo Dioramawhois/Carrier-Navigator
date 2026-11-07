@@ -1,10 +1,15 @@
 # Installation and updates
 
-Carrier: Autopilot Waypoints requires **CC2X SDK 0.10.0-dev**, Windows Carrier
+Carrier: Autopilot Waypoints requires **CC2X SDK 0.10.0-dev or compatible motion API**, Windows Carrier
 Command 2 **1.5.18-r2** and a local single-player session. The native
 **dinput8.dll is mandatory**: it provides carrier motion and control APIs absent
 from ordinary game Lua. SDK 0.9/0.8 cannot run this navigation interface.
 The SDK and this addon are separate downloads.
+
+The 0.1.1 candidate keeps normal autopilot on the existing SDK 0.10 DLL. Only
+close coastal routing needs the optional SDK 0.11 navigation API. An addon update
+does not require replacing that DLL to keep existing features. The aviation
+panel shows `COASTAL: UPDATE SDK` until the optional capability is available.
 
 ## Recommended: CC2 ModLoader
 

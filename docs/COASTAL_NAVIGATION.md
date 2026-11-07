@@ -1,6 +1,6 @@
 # Coastal navigation correction
 
-Unpublished candidate: Carrier: Autopilot Waypoints 0.1.1-alpha.1 with optional
+Unpublished candidate: Carrier: Autopilot Waypoints 0.1.1-alpha.2 with optional
 CC2X SDK 0.11.0-dev navigation API 1. Existing client-beta publication and its
 owner acceptance remain historical evidence for the unchanged public release.
 
@@ -19,9 +19,16 @@ remove native projection or make a shallow-water point navigable.
 
 ## Candidate behavior
 
+- Negotiate the optional API once per session. With the existing SDK 0.10,
+  retain the published motion API and native cruise behavior; the panel marks
+  the coastal upgrade as optional. A partial/unavailable optional interface also
+  selects native mode at this boundary. No version-string comparisons or native
+  address workarounds are used. Once coastal mode is selected, a backend failure
+  stops the route; it never silently switches that active request to native.
 - Explicitly opt this owned carrier into the separate SDK surface policy with
   strictly wet triangles and a 25 m arrival radius. Other ships retain their
-  native policy; native land-path rejection and steering remain in use.
+  native policy; native land-path rejection and steering remain in use. This and
+  the following coastal behaviors apply only with the optional API available.
 - Keep the requested point instead of silently projecting it offshore. Stop and
   display `ROUTE BLOCKED` if the SDK cannot admit/reach that point. Require Start
   after a blocked/configuration/fault refusal; do not silently revert to deep-water

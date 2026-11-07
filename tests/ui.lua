@@ -177,4 +177,21 @@ test('pending coastal guidance stays pausable without changing the route',functi
     assert(TEST.messages[#TEST.messages].topic=='pause' and route_positions()==positions)
     cc2x.modules.read=previous
 end)
+test('old SDK keeps Start enabled and clearly marks the optional coastal upgrade',function()
+    local previous=cc2x.modules.read
+    cc2x.modules.read=function(owner,topic,id)
+        if topic=='navigation_mode'then return 0 end
+        if topic=='navigation_status'then return 8 end
+        return previous(owner,topic,id)
+    end
+    show_navigation_panel()
+    local native,upgrade=false,false
+    for _,label in ipairs(TEST.labels)do
+        native=native or label=='FOLLOWING NATIVE ROUTE'
+        upgrade=upgrade or label=='COASTAL: UPDATE SDK'
+    end
+    assert(native and upgrade)
+    click(145,130);assert(TEST.messages[#TEST.messages].topic=='start')
+    cc2x.modules.read=previous
+end)
 print('SCENARIOS '..count)

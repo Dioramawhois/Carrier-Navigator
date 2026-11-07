@@ -5,9 +5,6 @@ return {
     on_load = function()
         assert(cc2.carrier.motion_available and cc2.carrier.motion_available() and cc2.carrier.drive_motion,
             'Carrier: Autopilot Waypoints requires motion-enabled CC2X SDK support')
-        assert(cc2.carrier.navigation_available and cc2.carrier.navigation_available() and
-            cc2.carrier.navigation_state and cc2.carrier.set_navigation,
-            'Carrier: Autopilot Waypoints requires CC2X 0.11 precise navigation support')
         runtime = require('bridge.runtime').new(cc2, require('bridge.cruise'), require('bridge.defence'))
         assert(cc2.events.on('vehicle_controls', function(id) runtime:buttons(id) end))
         print('Carrier: Autopilot Waypoints: native navigation, cruise control and team-contact defence ready')
