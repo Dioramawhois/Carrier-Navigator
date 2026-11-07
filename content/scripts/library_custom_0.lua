@@ -101,7 +101,11 @@ do
         update_ui_rectangle(x,y,panel,143,background)
         text(x+5,y+4,'AUTOPILOT WAYPOINTS',panel-10)
         local state=read('state',id,0)
-        text(x+5,y+17,not ready and 'UNAVAILABLE' or state==2 and 'FOLLOWING ROUTE' or 'PAUSED / MANUAL',panel-10)
+        local navigation_labels={[1]='PLOTTING ROUTE',[2]='FOLLOWING ROUTE',[3]='ROUTE BLOCKED',
+            [4]='ARRIVED AT POINT',[5]='UPDATE SDK REQUIRED',[6]='ROUTE SETUP FAILED',[7]='NAVIGATION STOPPED'}
+        local status=not ready and 'UNAVAILABLE' or navigation_labels[read('navigation_status',id,0)] or
+            (state==2 and 'FOLLOWING ROUTE' or 'PAUSED / MANUAL')
+        text(x+5,y+17,status,panel-10)
         text(x+5,y+30,string.format('NATIVE POWER: %d%%',read('speed',id,100)),panel-10)
         text(x+5,y+42,string.format('ACTUAL: %.1f KN',read('actual',id,0)),panel-10)
         button(x+5,y+55,42,'-10%',function()send('speed',math.max(10,read('speed',id,100)-10))end,ready)

@@ -1,5 +1,16 @@
 # Changelog
 
+## Unreleased - 0.1.1-alpha.1 coastal navigation candidate
+
+- Require the optional SDK 0.11 surface-navigation interface and configure only
+  the controlled carrier for wet-mesh routing and a 25 m arrival radius.
+- Preserve the raw coastal goal, wait for admitted guidance without forward
+  thrust, and expose blocked/setup/fault/arrival status on the aviation panel.
+- Combine exact-goal, speed-aware coasting with native corner slowdown; retain
+  full native open-water power, saved routes, repeat links and manual control.
+- Keep blocked points and require explicit restart instead of falling back to
+  deep-water routing. Live coastal/physics acceptance remains pending.
+
 ## 0.1.0-client-beta.1 - published 2026-11-07
 
 - Preserve owner-accepted alpha.4 navigation and the exact motion-enabled SDK

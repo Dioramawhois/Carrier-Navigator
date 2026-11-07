@@ -1,5 +1,10 @@
 # Carrier: Autopilot Waypoints
 
+This branch prepares an **unpublished 0.1.1-alpha.1 coastal-navigation candidate**
+requiring optional CC2X SDK 0.11 navigation support. See the
+[coastal correction](docs/COASTAL_NAVIGATION.md). The published beta and its
+acceptance described below are unchanged; the candidate needs a new owner game test.
+
 [Steam Workshop](https://steamcommunity.com/sharedfiles/filedetails/?id=3834928522)
 | [Client beta release](https://github.com/Dioramawhois/Carrier-Navigator/releases/tag/v0.1.0-client-beta.1)
 | [Gameplay video](https://www.youtube.com/watch?v=HidFBf5PSQg)

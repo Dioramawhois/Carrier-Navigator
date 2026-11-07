@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<data name="Carrier: Autopilot Waypoints" version="0.1.0-client-beta.1" description="Carrier routes and waypoint loops on the aviation map, animated helm controls and continuous power through turns. Requires the matching CC2X SDK 0.10.0-dev runtime. Windows single-player; Revolution compatible." author="Diorama" />
+<data name="Carrier: Autopilot Waypoints" version="0.1.1-alpha.1" description="Coastal carrier routes and waypoint loops on the aviation map, precise-goal approach and visible blocked-route status. Requires CC2X SDK 0.11 navigation support. Unpublished Windows single-player test candidate; Revolution compatible." author="Diorama" />

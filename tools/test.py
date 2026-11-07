@@ -64,8 +64,11 @@ def main():
                          (ROOT / 'content/scripts/library_custom_0.lua').read_text(encoding='utf-8'), encoding='utf-8')
     entry_policy = build / 'entry-test.lua'
     entry_policy.write_text('return function()\n'+(ROOT / 'content/scripts/library_custom_0.lua').read_text(encoding='utf-8')+'\nend\n', encoding='utf-8')
-    for name in ('defence', 'cruise', 'runtime', 'ui', 'entry'):
-        policy = runtime_policy if name=='runtime' else ui_policy if name=='ui' else entry_policy if name=='entry' else ROOT / 'content/bridge' / (name + '.lua')
+    main_policy = build / 'main-test.lua'
+    main_policy.write_text((ROOT / 'tests/main_setup.lua').read_text(encoding='utf-8')+'\n'+
+                           (ROOT / 'content/bridge/main.lua').read_text(encoding='utf-8'), encoding='utf-8')
+    for name in ('defence', 'cruise', 'runtime', 'ui', 'entry', 'main'):
+        policy = runtime_policy if name=='runtime' else ui_policy if name=='ui' else entry_policy if name=='entry' else main_policy if name=='main' else ROOT / 'content/bridge' / (name + '.lua')
         fixture = ROOT / 'tests' / (name + '.lua')
         if not policy.is_file() or not fixture.is_file():
             raise ValueError('Missing policy/fixture: ' + name)
