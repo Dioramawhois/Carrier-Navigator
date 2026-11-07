@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased - 0.1.1-alpha.2 SDK compatibility
+## 0.1.1-client-beta.1 - 2026-11-07
 
 - Keep normal autopilot, speed, defence and route controls available on SDK 0.10.
   Select the optional coastal API by capability at each session boundary.

@@ -1,12 +1,11 @@
 # Carrier: Autopilot Waypoints
 
-This branch prepares an **unpublished 0.1.1-alpha.2 coastal-navigation candidate**.
+**0.1.1-client-beta.1** adds optional coastal navigation and SDK compatibility.
 SDK 0.10 keeps the published native autopilot; optional SDK 0.11 navigation
 support enables close coastal approach. The panel shows `COASTAL: UPDATE SDK`
 when that optional capability is absent, while normal controls remain enabled.
 See the
-[coastal correction](docs/COASTAL_NAVIGATION.md). The published beta and its
-acceptance described below are unchanged; the candidate needs a new owner game test.
+[coastal correction](docs/COASTAL_NAVIGATION.md). The earlier release and its acceptance are documented below.
 
 [Steam Workshop](https://steamcommunity.com/sharedfiles/filedetails/?id=3834928522)
 | [Client beta release](https://github.com/Dioramawhois/Carrier-Navigator/releases/tag/v0.1.0-client-beta.1)

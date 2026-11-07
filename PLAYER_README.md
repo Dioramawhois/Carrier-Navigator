@@ -1,8 +1,8 @@
-# Carrier: Autopilot Waypoints 0.1.1-alpha.2
+# Carrier: Autopilot Waypoints 0.1.1-client-beta.1
 
 Windows CC2 1.5.18-r2, local single-player. SDK 0.10 retains normal navigation;
 the optional SDK 0.11 navigation API enables the coastal correction.
-The public beta's acceptance does not cover this build. See
+See
 [coastal navigation notes](docs/COASTAL_NAVIGATION.md).
 
 1. Open the **aviation-control map**. Drag the carrier icon to a destination;
