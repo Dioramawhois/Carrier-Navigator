@@ -10,6 +10,8 @@ g_camera_pos_x,g_camera_pos_y,g_camera_size=1000,2000,16000
 function color8(...)return{...}end
 function update_get_is_focus_local()return TEST.focus~=false end
 local vehicle={get=function()return true end,get_id=function()return 42 end,get_position_xz=function()return point(0,0)end}
+function vehicle:get_team()return 0 end
+function vehicle:get_definition_index()return 0 end
 function vehicle:get_waypoint_count()return #TEST.route end
 function vehicle:get_waypoint(i)
     local p=TEST.route[i+1]

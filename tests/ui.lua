@@ -136,4 +136,62 @@ test('aircraft loadout and camera screens do not receive the map overlay',functi
     TEST.selected=false;g_viewing_vehicle_id=99;update(256,256,1);assert(#TEST.labels==0)
     g_viewing_vehicle_id=0
 end)
+local function show_navigation_panel()
+    TEST.labels={};update(256,256,1)
+    local open=false
+    for _,label in ipairs(TEST.labels)do open=open or label=='AUTOPILOT WAYPOINTS' end
+    if not open then click(210,18);TEST.labels={};update(256,256,1)end
+end
+test('blocked coastal route is visible instead of claiming to follow',function()
+    local previous=cc2x.modules.read
+    cc2x.modules.read=function(owner,topic,id)
+        if topic=='navigation_status'then return 3 end
+        if topic=='state'then return 1 end
+        return previous(owner,topic,id)
+    end
+    show_navigation_panel()
+    local blocked,following=false,false
+    for _,label in ipairs(TEST.labels)do
+        blocked=blocked or label=='ROUTE BLOCKED'
+        following=following or label=='FOLLOWING ROUTE'
+    end
+    assert(blocked and not following)
+    cc2x.modules.read=previous
+end)
+test('pending coastal guidance stays pausable without changing the route',function()
+    local previous=cc2x.modules.read
+    cc2x.modules.read=function(owner,topic,id)
+        if topic=='navigation_status'then return 1 end
+        if topic=='state'then return 2 end
+        return previous(owner,topic,id)
+    end
+    show_navigation_panel()
+    local waiting,pausable=false,false
+    for _,label in ipairs(TEST.labels)do
+        waiting=waiting or label=='PLOTTING ROUTE'
+        pausable=pausable or label=='PAUSE AUTOPILOT'
+    end
+    assert(waiting and pausable)
+    local positions=route_positions()
+    click(145,130)
+    assert(TEST.messages[#TEST.messages].topic=='pause' and route_positions()==positions)
+    cc2x.modules.read=previous
+end)
+test('old SDK keeps Start enabled and clearly marks the optional coastal upgrade',function()
+    local previous=cc2x.modules.read
+    cc2x.modules.read=function(owner,topic,id)
+        if topic=='navigation_mode'then return 0 end
+        if topic=='navigation_status'then return 8 end
+        return previous(owner,topic,id)
+    end
+    show_navigation_panel()
+    local native,upgrade=false,false
+    for _,label in ipairs(TEST.labels)do
+        native=native or label=='FOLLOWING NATIVE ROUTE'
+        upgrade=upgrade or label=='COASTAL: UPDATE SDK'
+    end
+    assert(native and upgrade)
+    click(145,130);assert(TEST.messages[#TEST.messages].topic=='start')
+    cc2x.modules.read=previous
+end)
 print('SCENARIOS '..count)

@@ -1,0 +1,55 @@
+{
+  "schema": 1,
+  "version": "0.1.1-alpha.2",
+  "validation": "offline-real-lua-owned-synthetic-native-callbacks",
+  "scenarios": 101,
+  "python_packaging_tests": 6,
+  "sdk_facades_tested": [
+    {
+      "facade_sha256": "0084f0860aaf1186e849fc6bdd9c143c8bb1123db9aa1f47ad818895b3b053f6",
+      "sdk_artifact_sha256": "9bbd7a322a8e5164a98f7308e77d2c5ed5f65adcadfee699c5d561ab4aedf129",
+      "scenarios": 2,
+      "validation": "real-sdk-lua-facade-synthetic-native-callbacks"
+    },
+    {
+      "facade_sha256": "8d2d204c025e1098d29c75828e07fafa2c361e7ffa5b4f4075bdcd92ede2ce49",
+      "sdk_artifact_sha256": "2e799fd21ee3571b7d316cf0f25e7649e55b52a2777b2dc0bb84751018dc7ad5",
+      "scenarios": 2,
+      "validation": "real-sdk-lua-facade-synthetic-native-callbacks"
+    }
+  ],
+  "negative_controls_rejected": [
+    "manual_takeover_removed",
+    "radar_visual_or_replaced_with_and",
+    "optional_sdk_forced_on_legacy",
+    "coastal_failure_switches_to_native"
+  ],
+  "native_cruise_comparison_frames": 2000,
+  "native_reference_source_commit": "5ca1d50",
+  "source_sha256": {
+    "content/bridge/cruise.lua": "4050894babaf0d1cecaa51882143b08cce98f33331d3b08d35a59a02941002fa",
+    "content/bridge/defence.lua": "6e678599938589c19cebde103fe55e028599f0d2d0e825a8131a6581804e9b9e",
+    "content/bridge/main.lua": "9b25593ff67c7bcca340ff870137ff97d60a69306f21441a393e9fbdc4f694f5",
+    "content/bridge/runtime.lua": "2aab5e527bfe4fab88412a8bd20e38d43f8b6747723513211deab1f96b0ca47e",
+    "content/scripts/library_custom_0.lua": "5f929577e8d080856568712daef829ace6a9267cf41efc4a582fb423e163fbb5",
+    "tests/cruise.lua": "7b50a51550689e14688f52112b397e8952233112f88311b8e348d2905f2eea05",
+    "tests/defence.lua": "1bf45ce59af4ff8bb95c99450cdba561a20d9ae1d2c2c5566475b945a44d0868",
+    "tests/entry.lua": "5be44fca0586829100e39d815b58d2d07dda034aa9ec89d5e1d7c49e2b79f5b0",
+    "tests/fixtures/native_cruise_0_1_0.lua": "d77e6db9b48ad4744ec513772bd0d4ea7c8b89835add6d0bf2a2beac69cc098d",
+    "tests/main.lua": "fa5cb7034452dab46ab8ca9254276bc9a3218573872b6c4862107d16beeafbc8",
+    "tests/main_setup.lua": "65d3f6637136c7e4e3e002af9ae378b4b575a277c6768490c3eb33152756824b",
+    "tests/runtime.lua": "1cca7b011bedaa687e3af85b70e053e513550798134e4d38bbffaa37840a569f",
+    "tests/sdk_facade.lua": "322159b161fe0438f43b93af775c5bb9454c721167142e23fc8e8aa4335e26aa",
+    "tests/ui.lua": "916d5241d95116198ccff971449fbd1d7a280537b6237a559aadbeb59742f562",
+    "tests/ui_setup.lua": "c8fdce0a644a94bc03c508374f795cb61e2a21c785b2e3cfeeb91ef088bd3f6f",
+    "tests/lua_runner.c": "9579e88e6e96874e28b8d2065024bab2f2d8581c7d76f00ded8412381a459633",
+    "tools/test.py": "66107cdd4b1080d6980c9cf409d658a18856d86df0e9794c79f028a8b45a240a"
+  },
+  "game_runtime_tested": false,
+  "installed": false,
+  "published": false,
+  "remaining_acceptance": [
+    "coastal approach and stopping with Revolution",
+    "saved coastal point retention on first loaded frame"
+  ]
+}
