@@ -23,7 +23,12 @@ def main():
     output.mkdir(parents=True, exist_ok=False)
     runner = ROOT / 'build/lua-policy-tests.exe'
     if sha(runner) != RUNNER_HASH:
-        raise ValueError('Unknown owned policy runner')
+        receipt_path=ROOT/'build/TEST_RESULTS.json'
+        receipt=json.loads(receipt_path.read_text(encoding='utf-8')) if receipt_path.is_file() else {}
+        if (receipt.get('status')!='passed' or receipt.get('runner_sha256')!=sha(runner)
+                or receipt.get('source_sha256',{}).get('tests/lua_runner.c')!=sha(ROOT/'tests/lua_runner.c')):
+            raise ValueError('Build and verify the owned runner with tools/test.py first')
+    runner_hash=sha(runner)
     base = args.baseline.resolve() if args.baseline else ROOT
     def source(relative):
         return (base / relative).read_text(encoding='utf-8')
@@ -60,7 +65,7 @@ def main():
             print(process.stderr[:1800])
     passed = all(item['passed'] for item in results)
     report = {'status': 'passed' if passed else 'failed', 'results': results,
-        'scenarios': sum(item['scenarios'] or 0 for item in results), 'runner_sha256': RUNNER_HASH,
+        'scenarios': sum(item['scenarios'] or 0 for item in results), 'runner_sha256': runner_hash,
         'baseline': str(base), 'validation': 'owned-lua-policies-and-synthetic-ports',
         'game_started': False, 'multiplayer_runtime_tested': False,
         'source_sha256': {p.relative_to(ROOT).as_posix(): sha(p) for p in

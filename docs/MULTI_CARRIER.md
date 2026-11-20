@@ -37,6 +37,11 @@ second-client multiplayer acceptance test.
 
 `tools/test_multi_carrier.py` uses the existing hash-identified restricted Lua
 runner to execute explicit project-owned policies against synthetic telemetry.
+Build that runner with the normal `tools/test.py --sdk ... --zig ...` developer
+check first; the normal command also includes both multi-carrier suites. The
+focused check is `python tools/test_multi_carrier.py --regressions-only --output
+<new-directory>` and accepts either the pinned bootstrap runner or a runner
+matching the successful local build receipt and tracked runner source.
 The new tests reproduce the previous cross-carrier power/defence changes and
 pending-point placement after teleport, then exercise the corrected behavior.
 The existing cruise, defence, runtime, aviation UI and lifecycle suites remain.

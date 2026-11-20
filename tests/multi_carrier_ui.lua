@@ -62,4 +62,9 @@ test('a denied friendly-carrier drag cannot fall through to native route editing
     input_event(e_input.pointer_1,e_input_action.release)
     assert(TEST.base_events==n and TEST.vehicles[46].route[1].x==x and g_drag.vehicle_id==0)
 end)
+test('teleport also clears native waypoint selection from another carrier',function()
+    TEST.selected=true;g_selection.vehicle_id,g_selection.waypoint_id=42,7
+    TEST.screen=43;TEST.frame()
+    assert(not TEST.selected and g_selection.vehicle_id==0 and TEST.label('NAV'))
+end)
 print('SCENARIOS '..count)

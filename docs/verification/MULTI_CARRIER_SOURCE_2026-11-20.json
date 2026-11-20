@@ -1,0 +1,63 @@
+{
+  "schema": 1,
+  "status": "passed",
+  "date": "2026-11-20",
+  "scope": "unreleased-source-merge",
+  "lua_scenarios": 115,
+  "python_release_tests": 7,
+  "negative_controls_rejected": [
+    "manual_takeover_removed",
+    "radar_visual_or_replaced_with_and",
+    "optional_sdk_forced_on_legacy",
+    "coastal_failure_switches_to_native"
+  ],
+  "prior_0_1_1_rejected_by": [
+    "multi_carrier_runtime",
+    "multi_carrier_ui"
+  ],
+  "sdk_artifact_sha256": "29527d3a9fec3baf99e81c70ae5fa7c01fe8017574755640cfae0767355c0e78",
+  "sdk_facades_tested": [
+    {
+      "facade_sha256": "0084f0860aaf1186e849fc6bdd9c143c8bb1123db9aa1f47ad818895b3b053f6",
+      "sdk_artifact_sha256": "29527d3a9fec3baf99e81c70ae5fa7c01fe8017574755640cfae0767355c0e78",
+      "scenarios": 2,
+      "validation": "real-sdk-lua-facade-synthetic-native-callbacks"
+    }
+  ],
+  "runner_sha256": "22bad005a218938d6be3ab7073a21c63e32db667dce4c3a8d8b42c211d5a8899",
+  "compiler_sha256": "d408dd38eed3e5204af841bcebf70502a4dbbb8399a3a3262be55059370bc018",
+  "source_sha256": {
+    "content/bridge/cruise.lua": "4050894babaf0d1cecaa51882143b08cce98f33331d3b08d35a59a02941002fa",
+    "content/bridge/defence.lua": "6e678599938589c19cebde103fe55e028599f0d2d0e825a8131a6581804e9b9e",
+    "content/bridge/main.lua": "9b25593ff67c7bcca340ff870137ff97d60a69306f21441a393e9fbdc4f694f5",
+    "content/bridge/runtime.lua": "f906c502f0d2ce6f1ae9b42b7e0c1781884dc011383db6112d4f5e919aadbc3c",
+    "content/scripts/library_custom_0.lua": "7a96a18953494654039c3cddfa7cc832101d04a191ecf55ba5d769efb565c86a",
+    "tests/cruise.lua": "7b50a51550689e14688f52112b397e8952233112f88311b8e348d2905f2eea05",
+    "tests/defence.lua": "1bf45ce59af4ff8bb95c99450cdba561a20d9ae1d2c2c5566475b945a44d0868",
+    "tests/entry.lua": "5be44fca0586829100e39d815b58d2d07dda034aa9ec89d5e1d7c49e2b79f5b0",
+    "tests/fixtures/native_cruise_0_1_0.lua": "d77e6db9b48ad4744ec513772bd0d4ea7c8b89835add6d0bf2a2beac69cc098d",
+    "tests/main.lua": "fa5cb7034452dab46ab8ca9254276bc9a3218573872b6c4862107d16beeafbc8",
+    "tests/main_setup.lua": "65d3f6637136c7e4e3e002af9ae378b4b575a277c6768490c3eb33152756824b",
+    "tests/multi_carrier_runtime.lua": "ce5c118933f2f1ac9077af4cf16a4c15f483b25ac6363d66c6bc911fc717f85d",
+    "tests/multi_carrier_ui.lua": "8fb7d10994b4abd703083b1f78bea6e865c4889561831541aa7aee9b763725fb",
+    "tests/multi_carrier_ui_setup.lua": "7e3b25ee3f170085f008d0100a978a90f95a83179a2c787989c037ba8328cba1",
+    "tests/runtime.lua": "8fcd14f842c4b6274ec58f2e801c7250e95c7249060817d98e6214e377cf18da",
+    "tests/sdk_facade.lua": "322159b161fe0438f43b93af775c5bb9454c721167142e23fc8e8aa4335e26aa",
+    "tests/ui.lua": "916d5241d95116198ccff971449fbd1d7a280537b6237a559aadbeb59742f562",
+    "tests/ui_setup.lua": "167b72c9a12c9bf2b15b2d8b09aecdcea0bc41e94e6954aea8868009d141ad35",
+    "tests/lua_runner.c": "5857880a92f32bf43ffe323c625a374815de21ed23faab5fe61fcc2ca1ddaa72",
+    "tools/test.py": "c78eee30f45fc75894152329bd505dd5c8daefa2a2211ffe8a5692f56d9bc7e9"
+  },
+  "runtime_acceptance": {
+    "game_started": false,
+    "three_carriers_tested_in_game": false,
+    "second_client_tested": false,
+    "dedicated_server_tested": false
+  },
+  "delivery": {
+    "github_source_merge_requested": true,
+    "release_created": false,
+    "workshop_uploaded": false,
+    "installed_game_changed": false
+  }
+}

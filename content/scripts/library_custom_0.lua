@@ -30,8 +30,11 @@ do
         if type(update_get_screen_team_id)=='function'then return update_get_screen_team_id()end
         local v=physical_carrier();return v and v:get_team() or -1
     end
+    local function is_carrier(v)
+        return v and v:get() and v:get_definition_index()==e_game_object_type.chassis_carrier
+    end
     local function friendly_carrier(v)
-        return v and v:get() and v:get_definition_index()==e_game_object_type.chassis_carrier and v:get_team()==team()
+        return is_carrier(v)and v:get_team()==team()
     end
     local function by_id(id)
         local own=physical_carrier()
@@ -63,9 +66,11 @@ do
     local function cancel_edit()
         adding,consumed,announced,announce_ticks=false,false,false,0;buttons={}
         local dragged=g_drag and by_id(g_drag.vehicle_id)
-        if g_drag and (g_drag.vehicle_id==screen_id or g_drag.vehicle_id==selected_id or friendly_carrier(dragged))then clear_field(g_drag)end
-        if g_highlighted and (g_highlighted.vehicle_id==screen_id or g_highlighted.vehicle_id==selected_id)then clear_field(g_highlighted)end
-        if g_selection and (g_selection.vehicle_id==screen_id or g_selection.vehicle_id==selected_id)and
+        if g_drag and (g_drag.vehicle_id==screen_id or g_drag.vehicle_id==selected_id or is_carrier(dragged))then clear_field(g_drag)end
+        if g_highlighted and (g_highlighted.vehicle_id==screen_id or g_highlighted.vehicle_id==selected_id or
+            is_carrier(by_id(g_highlighted.vehicle_id)))then clear_field(g_highlighted)end
+        if g_selection and (g_selection.vehicle_id==screen_id or g_selection.vehicle_id==selected_id or
+            is_carrier(by_id(g_selection.vehicle_id)))and
             (g_selection.waypoint_id or 0)>0 then clear_field(g_selection)end
     end
     local function synchronize()
@@ -200,7 +205,10 @@ do
         button(x+51,y+55,42,'+10%',function()send('speed',math.min(100,read('speed',id,100)+10),id)end,ready)
         button(x+97,y+55,44,'FULL',function()send('speed',100,id)end,ready)
         button(x+5,y+73,65,adding and 'CANCEL' or '+ POINT',function()adding=not adding end,ready)
-        button(x+74,y+73,67,'CLEAR',function()if send('pause',0,id)then v:clear_waypoints()end;adding=false end,ready)
+        button(x+74,y+73,67,'CLEAR',function()
+            if send('pause',0,id)then local live=carrier();if live and live:get_id()==id then live:clear_waypoints()end end
+            adding=false
+        end,ready)
         button(x+5,y+91,136,state==2 and 'PAUSE AUTOPILOT' or 'START AUTOPILOT',function()adding=false;send(state==2 and 'pause' or 'start',state==2 and 0 or 1,id)end,ready and v:get_waypoint_count()>0)
         local defence=read('defence',id,0)==1
         button(x+5,y+109,136,defence and 'DEFENCE: ON' or 'DEFENCE: OFF',function()send('defence',defence and 0 or 1,id)end,ready)
@@ -277,7 +285,7 @@ do
         local release=action==e_input_action.release and (event==e_input.pointer_1 or event==e_input.action_a)
         local dragged=g_drag and by_id(g_drag.vehicle_id)
         if release and map_active()and update_get_is_focus_local()and friendly_carrier(dragged)and
-            not can_route(dragged)and (g_drag_distance or 0)>3 then clear_drag();return end
+            not can_route(dragged)and (g_drag_distance or 0)>3 then clear_field(g_drag);return end
         if release and map_active() and update_get_is_focus_local() and can_route(dragged) and (g_drag_distance or 0)>3 then
             v=dragged;selected_id=v:get_id();adding=false;buttons={}
             local x,z=world(g_cursor_pos_x or px,g_cursor_pos_y or py)
